@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
@@ -159,6 +159,25 @@
 
   /* ===== DIVERGENCE ===== */
   .diverge{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+  /* ===== UPSET RISK ===== */
+  .upset-grid{display:flex;flex-direction:column;gap:12px}
+  .urow{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 18px;border-radius:13px;
+    border:1px solid var(--line-faint);transition:transform .25s,border-color .25s}
+  .urow:hover{transform:translateX(3px)}
+  .urow.high{border-color:rgba(255,107,107,.45);background:linear-gradient(90deg,rgba(255,107,107,.08),transparent)}
+  .urow.mid{border-color:rgba(255,210,74,.4);background:linear-gradient(90deg,rgba(255,210,74,.06),transparent)}
+  .urow .u-gauge{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:50px}
+  .urow .u-pct{font-family:'Bebas Neue';font-size:30px;line-height:.8}
+  .urow.high .u-pct{color:#ff8a7a}.urow.mid .u-pct{color:var(--gold)}
+  .urow .u-lvl{font-family:'JetBrains Mono';font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2)}
+  .urow .u-mid{min-width:0}
+  .urow .u-match{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:5px;flex-wrap:wrap}
+  .urow .u-match .vs{font-family:'JetBrains Mono';font-size:10px;color:var(--muted2)}
+  .urow .u-reason{font-size:11.5px;color:var(--muted);line-height:1.5}
+  .urow .u-date{font-family:'JetBrains Mono';font-size:9px;color:var(--muted2);white-space:nowrap;text-align:right}
+  .urow .u-result{font-family:'JetBrains Mono';font-size:10px;margin-top:4px}
+  .urow .u-result.confirmed{color:#7fe6a8}
+  @media(max-width:640px){.urow{grid-template-columns:auto 1fr;gap:12px}.urow .u-date{display:none}}
   .dv{padding:20px;position:relative;border-radius:14px;overflow:hidden;transition:transform .3s}
   .dv:hover{transform:translateY(-4px)}
   .dv .tag{display:inline-block;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.08em;
@@ -207,6 +226,21 @@
 
   /* ===== BRACKET ===== */
   .bracket-scroll{overflow-x:auto;border-radius:16px;padding:6px}
+  /* ===== KO STAGES FRAMEWORK ===== */
+  .ko-stages{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px}
+  .ko-col{display:flex;flex-direction:column;gap:8px}
+  .ko-col-h{font-family:'Bebas Neue';font-size:17px;letter-spacing:.04em;text-align:center;color:var(--gold);
+    padding-bottom:8px;border-bottom:1px solid var(--line-faint);margin-bottom:4px}
+  .ko-col-h small{display:block;font-family:'JetBrains Mono';font-size:8px;color:var(--muted2);letter-spacing:.1em;margin-top:3px}
+  .ko-slot{background:rgba(8,52,24,.3);border:1px dashed var(--line2);border-radius:7px;
+    padding:9px 6px;text-align:center;font-family:'JetBrains Mono';font-size:9px;color:var(--faint);
+    min-height:32px;display:flex;align-items:center;justify-content:center}
+  .ko-col.r32 .ko-slot{font-size:8px;padding:6px 4px;min-height:24px}
+  .ko-bracket-label{font-family:'JetBrains Mono';font-size:11px;color:var(--muted2);margin-bottom:12px;text-align:center}
+  @media(max-width:760px){
+    .ko-stages{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+    .ko-col-h{font-size:14px}
+  }
   svg.bracket{min-width:900px;width:100%;height:auto;display:block;padding:14px}
   .bx{fill:rgba(8,52,24,.55);stroke:var(--line-faint);stroke-width:1}
   .bx.win{fill:rgba(255,210,74,.12);stroke:var(--gold);stroke-width:1.5}
@@ -274,6 +308,15 @@
   .refresh-btn.spin{animation:btnspin 1s linear infinite}
   @keyframes btnspin{to{transform:none}}
   .match-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+  .round-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .round-tab{font-family:'Space Grotesk';font-size:13px;font-weight:600;color:var(--muted);
+    background:var(--panel);border:1px solid var(--line-faint);border-radius:10px;padding:9px 16px;cursor:pointer;
+    transition:all .2s;display:flex;align-items:center;gap:8px}
+  .round-tab:hover{color:#fff;border-color:var(--line2)}
+  .round-tab.active{color:#06140c;background:var(--gold);border-color:var(--gold)}
+  .round-tab .rt-cnt{font-family:'JetBrains Mono';font-size:10px;opacity:.7;background:rgba(0,0,0,.15);
+    padding:1px 6px;border-radius:10px}
+  .round-tab.active .rt-cnt{background:rgba(6,20,12,.2)}
   .mcard{border-radius:14px;padding:16px;position:relative;transition:transform .3s;display:flex;flex-direction:column;gap:12px}
   .mcard:hover{transform:translateY(-3px)}
   .mcard.live{border:1px solid rgba(255,107,107,.5)}
@@ -366,44 +409,46 @@
   <div class="funnel glass rv" id="funnelBox"></div>
 </section>
 
-<section id="grouptree">
-  <div class="sh rv"><span class="num">02</span><h2 data-i18n="h2"></h2></div>
-  <p class="sd rv" data-i18n="d2"></p>
-  <div class="groups-grid" id="groupsGrid"></div>
-</section>
-
 <section id="blind">
-  <div class="sh rv"><span class="num">03</span><h2 data-i18n="h3"></h2></div>
+  <div class="sh rv"><span class="num">02</span><h2 data-i18n="h3"></h2></div>
   <p class="sd rv" data-i18n="d3"></p>
   <div class="bt-bar rv">
     <div class="scoreboard">
-      <div class="s"><b id="sc-done">11</b><span data-i18n="sbDone"></span></div>
+      <div class="s"><b id="sc-done">16</b><span data-i18n="sbDone"></span></div>
       <div class="s"><b id="sc-wdl" style="color:var(--gold)">—</b><span><span data-i18n="sbWdl"></span> <span id="sc-wdl-frac" class="sc-frac"></span></span></div>
       <div class="s"><b id="sc-exact" style="color:var(--cyan)">—</b><span><span data-i18n="sbExact"></span> <span id="sc-exact-frac" class="sc-frac"></span></span></div>
     </div>
   </div>
-  <div class="mono" id="refreshNote" style="font-size:11px;color:var(--muted2);margin-bottom:16px" data-i18n="refreshNote"></div>
+  <div class="round-tabs rv" id="roundTabs"></div>
   <div class="match-cards" id="matchCards"></div>
 </section>
 
 <section id="bracket">
-  <div class="sh rv"><span class="num">04</span><h2 data-i18n="h4"></h2></div>
+  <div class="sh rv"><span class="num">03</span><h2 data-i18n="h4"></h2></div>
   <p class="sd rv" data-i18n="d4"></p>
+  <div class="ko-stages rv" id="koStages"></div>
+  <div class="ko-bracket-label rv" data-i18n="koBracketLabel"></div>
   <div class="bracket-scroll glass rv">
     <svg class="bracket" viewBox="0 0 900 350" xmlns="http://www.w3.org/2000/svg" id="svgtree"></svg>
   </div>
 </section>
 
 <section id="title">
-  <div class="sh rv"><span class="num">05</span><h2 data-i18n="h5"></h2></div>
+  <div class="sh rv"><span class="num">04</span><h2 data-i18n="h5"></h2></div>
   <p class="sd rv" data-i18n="d5"></p>
   <div class="bars glass rv" id="bars" style="padding:22px"></div>
 </section>
 
 <section id="diverge">
-  <div class="sh rv"><span class="num">06</span><h2 data-i18n="h6"></h2></div>
+  <div class="sh rv"><span class="num">05</span><h2 data-i18n="h6"></h2></div>
   <p class="sd rv" data-i18n="d6"></p>
   <div class="diverge" id="dv"></div>
+</section>
+
+<section id="upset">
+  <div class="sh rv"><span class="num">06</span><h2 data-i18n="hUpset"></h2></div>
+  <p class="sd rv" data-i18n="dUpset"></p>
+  <div class="upset-grid" id="upsetGrid"></div>
 </section>
 
 <section id="backtest">
@@ -495,7 +540,7 @@ const I18N={
  f8Teams:{zh:"8 队 · 4 场",en:"8 teams · 4 games"},
  fSemiTeams:{zh:"4 队 · 2 场",en:"4 teams · 2 games"},
  fFinalTeams:{zh:"2 队 · 1 场",en:"2 teams · 1 game"},
- fGroupDetail:{zh:"已结束11 / 待赛多场",en:"11 final / more upcoming"},
+ fGroupDetail:{zh:"已结束16 / 待赛多场",en:"16 final / more upcoming"},
  f32Detail:{zh:"小组赛结束后揭晓",en:"after group stage"},
  fFinalDate:{zh:"7/19 纽约",en:"Jul 19 · NY"},
 };
@@ -609,6 +654,67 @@ function renderDV(){
 }
 renderDV();
 
+/* ---------- upset risk module ---------- */
+const UPSET=[
+ {a:"Spain",b:"Cabo Verde",risk:78,date:"6/15",
+  rzh:"佛得角首次参赛,数据少、模型评分置信度低,真实下限被低估;西班牙依赖核心球员状态、首战易被铁桶阵摩擦。",
+  ren:"Cabo Verde's debut means thin data and a low-confidence rating that likely understates their floor; Spain leans on star form and can be ground down by a packed defense in its opener.",
+  result:{zh:"已应验:0-0 平",en:"Confirmed: 0-0 draw"}},
+ {a:"Saudi Arabia",b:"Uruguay",risk:62,date:"6/15",
+  rzh:"沙特擅长死守反击、主场化氛围;乌拉圭巨星依赖、首战磨合不足。典型的强队被摩擦剧本。",
+  ren:"Saudi Arabia defend deep and counter; Uruguay rely on stars and lacked sharpness in their opener — a classic 'favorite ground down' setup.",
+  result:{zh:"已应验:1-1 平",en:"Confirmed: 1-1 draw"}},
+ {a:"Iran",b:"New Zealand",risk:58,date:"6/15",
+  rzh:"新西兰首次世界杯有竞争力、零包袱死拼;伊朗赛前被迫迁移基地、备战受扰。两队实力其实接近。",
+  ren:"New Zealand are competitive debutants with nothing to lose; Iran's prep was disrupted by a forced base-camp move. The sides are closer than rated.",
+  result:{zh:"已应验:2-2 平",en:"Confirmed: 2-2 draw"}},
+ {a:"Belgium",b:"Egypt",risk:55,date:"6/15",
+  rzh:"埃及组织严密、萨拉赫带队;比利时黄金一代老化、动机存疑。实力差距小于纸面。",
+  ren:"Egypt are well-organized with Salah; Belgium's golden generation is aging with motivation doubts. The gap is smaller than it looks on paper.",
+  result:{zh:"已应验:1-1 平",en:"Confirmed: 1-1 draw"}},
+ {a:"Argentina",b:"Algeria",risk:48,date:"6/16",
+  rzh:"阿根廷阵容老化、首战调动慢;阿尔及利亚有非洲一流球员(马赫雷斯)、擅长防反。卫冕冠军首战历来易失分——2022年就曾负沙特。",
+  ren:"Argentina's squad is aging and slow to start; Algeria have top-tier talent (Mahrez) and counter well. Holders often slip in openers — recall the 2022 loss to Saudi Arabia.",
+  result:null},
+ {a:"Portugal",b:"DR Congo",risk:50,date:"6/17",
+  rzh:"刚果金身体素质强、爆发力足;葡萄牙依赖C罗等老将、磨合期长。强弱悬殊但弱方有冲击力。",
+  ren:"DR Congo are physical and explosive; Portugal rely on aging stars and take time to gel. Big gap on paper, but a dangerous underdog.",
+  result:null},
+ {a:"England",b:"Croatia",risk:46,date:"6/17",
+  rzh:"克罗地亚大赛经验丰富、中场强硬(莫德里奇一代余威);英格兰多届大赛'决赛恐惧'、易在硬仗中保守。",
+  ren:"Croatia bring deep tournament nous and a tough midfield; England carry a history of freezing in big knockout matches and going passive.",
+  result:null},
+ {a:"Germany",b:"Cote d'Ivoire",risk:43,date:"6/20",
+  rzh:"科特迪瓦是非洲杯冠军、身体和速度突出;德国重建期不稳。第二轮强强相遇,德国未必碾压。",
+  ren:"Côte d'Ivoire are reigning AFCON champions with pace and power; Germany are mid-rebuild. A round-2 clash where Germany may not cruise.",
+  result:null},
+ {a:"Uruguay",b:"Spain",risk:41,date:"6/26",
+  rzh:"末轮强强对话,若两队已出线可能轮换;乌拉圭身体对抗强,西班牙传控可能被打乱。",
+  ren:"A heavyweight final-round clash; if both are through they may rotate. Uruguay's physicality can disrupt Spain's possession game.",
+  result:null},
+];
+const ug=document.getElementById('upsetGrid');
+function renderUpset(){
+ ug.innerHTML='';
+ UPSET.forEach((u,i)=>{
+  const lvl=u.risk>=65?'high':'mid';
+  const lvlTxt=u.risk>=65?(LANG==='zh'?'高':'HIGH'):(LANG==='zh'?'中高':'MED');
+  const el=document.createElement('div');el.className=`urow glass rv ${lvl}`+(i?(' d'+Math.min(i,4)):'');
+  const reason=LANG==='zh'?u.rzh:u.ren;
+  const resultHtml=u.result?`<div class="u-result confirmed">✓ ${u.result[LANG]}</div>`:'';
+  el.innerHTML=`
+   <div class="u-gauge"><div class="u-pct">${u.risk}</div><div class="u-lvl">${lvlTxt}</div></div>
+   <div class="u-mid">
+     <div class="u-match">${flag(u.a,16)} ${TN(u.a)} <span class="vs">vs</span> ${flag(u.b,16)} ${TN(u.b)}</div>
+     <div class="u-reason">${reason}</div>
+     ${resultHtml}
+   </div>
+   <div class="u-date">${u.date}</div>`;
+  ug.appendChild(el);io.observe(el);
+ });
+}
+renderUpset();
+
 /* ---------- bars (animate width on view) ---------- */
 const bars=document.getElementById('bars'),mx=Math.max(...Object.values(PROB));
 Object.entries(PROB).forEach(([tm,p])=>{const d=document.createElement('div');d.className='bar';
@@ -623,6 +729,7 @@ const advL=()=>[t('advance'),t('second'),'',''];
 const ggrid=document.getElementById('groupsGrid');
 let _gmatchStore=[];
 function renderGroups(){
+ if(!ggrid)return;
  ggrid.innerHTML='';_gmatchStore=[];
  Object.entries(GROUPS).forEach(([g,rows],gi)=>{
   const card=document.createElement('div');card.className='gcard glass rv'+(gi?(' d'+Math.min(gi%4+1,4)):'');
@@ -642,7 +749,7 @@ function renderGroups(){
 }
 renderGroups();
 // delegate clicks on group match rows -> modal
-ggrid.addEventListener('click',e=>{const r=e.target.closest('.gmatch[data-mi]');if(r){openModal(_gmatchStore[+r.dataset.mi]);}});
+if(ggrid)ggrid.addEventListener('click',e=>{const r=e.target.closest('.gmatch[data-mi]');if(r){openModal(_gmatchStore[+r.dataset.mi]);}});
 
 /* ---------- KO bracket (clean symmetric layout) ---------- */
 const win=(a,b)=>R[a]>=R[b]?a:b;const svg=document.getElementById('svgtree');
@@ -710,14 +817,31 @@ svg.querySelectorAll('.bline').forEach((l,i)=>setTimeout(()=>l.classList.add('dr
 }
 renderBracket();
 
+/* ---------- KO stages empty framework (R32 -> R16 -> QF -> SF -> Final, all TBD) ---------- */
+function renderKOStages(){
+ const box=document.getElementById('koStages');if(!box)return;box.innerHTML='';
+ const cols=[
+  {key:'r32',zh:'32强',en:'Round of 32',n:16,szh:'16场',sen:'16 games'},
+  {key:'r16',zh:'16强',en:'Round of 16',n:8,szh:'8场',sen:'8 games'},
+  {key:'qf',zh:'8强',en:'Quarter-finals',n:4,szh:'4场',sen:'4 games'},
+  {key:'sf',zh:'半决赛',en:'Semi-finals',n:2,szh:'2场',sen:'2 games'},
+  {key:'fin',zh:'决赛',en:'Final',n:1,szh:'1场',sen:'1 game'},
+ ];
+ const tbd=LANG==='zh'?'待定':'TBD';
+ cols.forEach(c=>{
+  const col=document.createElement('div');col.className='ko-col '+c.key;
+  let slots='';
+  for(let i=0;i<c.n;i++) slots+=`<div class="ko-slot">${tbd}</div>`;
+  col.innerHTML=`<div class="ko-col-h">${LANG==='zh'?c.zh:c.en}<small>${LANG==='zh'?c.szh:c.sen}</small></div>${slots}`;
+  box.appendChild(col);
+ });
+}
+renderKOStages();
+
 /* ---------- blind (with xG detail) ---------- */
-const PLAYED=[
- {a:"Mexico",b:"South Africa",pa:55,pd:25,pb:20,score:"2-0",pick:"Mexico",xa:1.9,xb:0.5,real:{score:"2-0",winner:"Mexico"}},
- {a:"Korea Republic",b:"Czechia",pa:40,pd:27,pb:33,score:"1-1",pick:"Korea Republic",xa:1.4,xb:1.3,real:{score:"2-1",winner:"Korea Republic"}},
- {a:"USA",b:"Paraguay",pa:57,pd:22,pb:21,score:"2-0",pick:"USA",xa:2.3,xb:0.98,real:{score:"4-1",winner:"USA"}},
- {a:"Canada",b:"Bosnia",pa:38,pd:30,pb:32,score:"1-1",pick:"Draw",xa:1.49,xb:1.43,real:{score:"1-1",winner:"Draw"}},
-];
-const BLIND=[{"a":"Qatar","b":"Switzerland","pa":22,"pd":22,"pb":57,"score":"1-1","pick":"Draw","xa":1.14,"xb":1.97,"real":{"score":"1-1","winner":"Draw"}},{"a":"Brazil","b":"Morocco","pa":29,"pd":24,"pb":48,"score":"1-1","pick":"Draw","xa":1.3,"xb":1.73,"bold":1,"real":{"score":"1-1","winner":"Draw"}},{"a":"Haiti","b":"Scotland","pa":15,"pd":18,"pb":67,"score":"0-2","pick":"Scotland","xa":0.98,"xb":2.3,"real":{"score":"0-1","winner":"Scotland"}},{"a":"Australia","b":"Turkiye","pa":29,"pd":24,"pb":48,"score":"1-1","pick":"Draw","xa":1.3,"xb":1.73,"real":{"score":"2-0","winner":"Australia"}},{"a":"Germany","b":"Curacao","pa":87,"pd":8,"pb":4,"score":"3-0","pick":"Germany","xa":3.44,"xb":0.65,"real":{"score":"7-1","winner":"Germany"}},{"a":"Netherlands","b":"Japan","pa":37,"pd":24,"pb":39,"score":"1-1","pick":"Draw","xa":1.48,"xb":1.52,"real":{"score":"2-2","winner":"Draw"}},{"a":"Cote d'Ivoire","b":"Ecuador","pa":30,"pd":24,"pb":46,"score":"1-1","pick":"Draw","xa":1.33,"xb":1.69,"real":{"score":"1-0","winner":"Cote d'Ivoire"}},{"a":"Sweden","b":"Tunisia","pa":44,"pd":24,"pb":32,"score":"1-1","pick":"Draw","xa":1.65,"xb":1.36},{"a":"Spain","b":"Cabo Verde","pa":91,"pd":4,"pb":2,"score":"4-0","pick":"Spain","xa":4.15,"xb":0.54},{"a":"Belgium","b":"Egypt","pa":45,"pd":24,"pb":31,"score":"1-1","pick":"Draw","xa":1.67,"xb":1.35},{"a":"Saudi Arabia","b":"Uruguay","pa":17,"pd":20,"pb":63,"score":"1-2","pick":"Uruguay","xa":1.03,"xb":2.18},{"a":"Iran","b":"New Zealand","pa":60,"pd":21,"pb":19,"score":"2-1","pick":"Iran","xa":2.07,"xb":1.09},{"a":"France","b":"Senegal","pa":74,"pd":15,"pb":10,"score":"2-0","pick":"France","xa":2.58,"xb":0.87},{"a":"Iraq","b":"Norway","pa":11,"pd":16,"pb":73,"score":"0-2","pick":"Norway","xa":0.89,"xb":2.54},{"a":"Argentina","b":"Algeria","pa":83,"pd":11,"pb":6,"score":"3-0","pick":"Argentina","xa":3.06,"xb":0.73},{"a":"Austria","b":"Jordan","pa":60,"pd":21,"pb":19,"score":"2-1","pick":"Austria","xa":2.07,"xb":1.09},{"a":"Portugal","b":"DR Congo","pa":81,"pd":12,"pb":7,"score":"2-0","pick":"Portugal","xa":2.97,"xb":0.76},{"a":"England","b":"Croatia","pa":64,"pd":20,"pb":17,"score":"2-1","pick":"England","xa":2.19,"xb":1.03},{"a":"Ghana","b":"Panama","pa":46,"pd":24,"pb":30,"score":"1-1","pick":"Draw","xa":1.7,"xb":1.32},{"a":"Uzbekistan","b":"Colombia","pa":17,"pd":20,"pb":63,"score":"1-2","pick":"Colombia","xa":1.04,"xb":2.16}];
+const ALLMATCHES=[{"a":"Mexico","b":"South Africa","pa":74,"pd":16,"pb":11,"score":"2-0","pick":"Mexico","xa":2.56,"xb":0.88,"group":"A","round":1,"real":{"score":"2-0","winner":"Mexico"}},{"a":"Korea Republic","b":"Czechia","pa":51,"pd":23,"pb":26,"score":"1-1","pick":"Draw","xa":1.83,"xb":1.23,"group":"A","round":1,"real":{"score":"2-1","winner":"Korea Republic"}},{"a":"Mexico","b":"Korea Republic","pa":46,"pd":24,"pb":30,"score":"1-1","pick":"Draw","xa":1.69,"xb":1.33,"group":"A","round":2},{"a":"Czechia","b":"South Africa","pa":53,"pd":23,"pb":25,"score":"1-1","pick":"Draw","xa":1.86,"xb":1.21,"group":"A","round":2},{"a":"Czechia","b":"Mexico","pa":19,"pd":21,"pb":60,"score":"1-2","pick":"Mexico","xa":1.09,"xb":2.06,"group":"A","round":3},{"a":"South Africa","b":"Korea Republic","pa":15,"pd":19,"pb":66,"score":"0-2","pick":"Korea Republic","xa":0.99,"xb":2.27,"group":"A","round":3},{"a":"Canada","b":"Bosnia","pa":47,"pd":24,"pb":29,"score":"1-1","pick":"Draw","xa":1.72,"xb":1.31,"group":"B","round":1,"real":{"score":"1-1","winner":"Draw"}},{"a":"Qatar","b":"Switzerland","pa":22,"pd":22,"pb":57,"score":"1-1","pick":"Draw","xa":1.14,"xb":1.97,"group":"B","round":1,"real":{"score":"1-1","winner":"Draw"}},{"a":"Canada","b":"Qatar","pa":51,"pd":23,"pb":26,"score":"1-1","pick":"Draw","xa":1.82,"xb":1.23,"group":"B","round":2},{"a":"Switzerland","b":"Bosnia","pa":52,"pd":23,"pb":25,"score":"1-1","pick":"Draw","xa":1.86,"xb":1.21,"group":"B","round":2},{"a":"Switzerland","b":"Canada","pa":43,"pd":24,"pb":33,"score":"1-1","pick":"Draw","xa":1.62,"xb":1.39,"group":"B","round":3},{"a":"Bosnia","b":"Qatar","pa":42,"pd":24,"pb":34,"score":"1-1","pick":"Draw","xa":1.59,"xb":1.42,"group":"B","round":3},{"a":"Brazil","b":"Morocco","pa":29,"pd":24,"pb":48,"score":"1-1","pick":"Draw","xa":1.3,"xb":1.73,"group":"C","round":1,"real":{"score":"1-1","winner":"Draw"},"bold":1},{"a":"Haiti","b":"Scotland","pa":15,"pd":18,"pb":67,"score":"0-2","pick":"Scotland","xa":0.98,"xb":2.3,"group":"C","round":1,"real":{"score":"0-1","winner":"Scotland"}},{"a":"Brazil","b":"Haiti","pa":86,"pd":9,"pb":4,"score":"3-0","pick":"Brazil","xa":3.29,"xb":0.68,"group":"C","round":2},{"a":"Scotland","b":"Morocco","pa":12,"pd":16,"pb":72,"score":"0-2","pick":"Morocco","xa":0.91,"xb":2.48,"group":"C","round":2},{"a":"Scotland","b":"Brazil","pa":18,"pd":20,"pb":62,"score":"1-2","pick":"Brazil","xa":1.05,"xb":2.14,"group":"C","round":3},{"a":"Morocco","b":"Haiti","pa":90,"pd":6,"pb":2,"score":"3-0","pick":"Morocco","xa":3.81,"xb":0.59,"group":"C","round":3},{"a":"USA","b":"Paraguay","pa":70,"pd":17,"pb":13,"score":"2-0","pick":"USA","xa":2.42,"xb":0.93,"group":"D","round":1,"real":{"score":"4-1","winner":"USA"}},{"a":"Australia","b":"Turkiye","pa":29,"pd":24,"pb":48,"score":"1-1","pick":"Draw","xa":1.3,"xb":1.73,"group":"D","round":1,"real":{"score":"2-0","winner":"Australia"}},{"a":"USA","b":"Australia","pa":70,"pd":17,"pb":13,"score":"2-0","pick":"USA","xa":2.4,"xb":0.94,"group":"D","round":2},{"a":"Turkiye","b":"Paraguay","pa":48,"pd":23,"pb":28,"score":"1-1","pick":"Draw","xa":1.75,"xb":1.28,"group":"D","round":2},{"a":"Turkiye","b":"USA","pa":19,"pd":21,"pb":60,"score":"1-2","pick":"USA","xa":1.09,"xb":2.07,"group":"D","round":3},{"a":"Paraguay","b":"Australia","pa":37,"pd":24,"pb":39,"score":"1-1","pick":"Draw","xa":1.48,"xb":1.52,"group":"D","round":3},{"a":"Germany","b":"Curacao","pa":87,"pd":8,"pb":4,"score":"3-0","pick":"Germany","xa":3.44,"xb":0.65,"group":"E","round":1,"real":{"score":"7-1","winner":"Germany"}},{"a":"Cote d'Ivoire","b":"Ecuador","pa":30,"pd":24,"pb":46,"score":"1-1","pick":"Draw","xa":1.33,"xb":1.69,"group":"E","round":1,"real":{"score":"1-0","winner":"Cote d'Ivoire"}},{"a":"Germany","b":"Cote d'Ivoire","pa":63,"pd":20,"pb":17,"score":"2-1","pick":"Germany","xa":2.15,"xb":1.04,"group":"E","round":2},{"a":"Ecuador","b":"Curacao","pa":77,"pd":14,"pb":9,"score":"2-0","pick":"Ecuador","xa":2.7,"xb":0.83,"group":"E","round":2},{"a":"Ecuador","b":"Germany","pa":23,"pd":22,"pb":54,"score":"1-1","pick":"Draw","xa":1.18,"xb":1.91,"group":"E","round":3},{"a":"Curacao","b":"Cote d'Ivoire","pa":13,"pd":17,"pb":69,"score":"0-2","pick":"Cote d'Ivoire","xa":0.94,"xb":2.39,"group":"E","round":3},{"a":"Netherlands","b":"Japan","pa":37,"pd":24,"pb":39,"score":"1-1","pick":"Draw","xa":1.48,"xb":1.52,"group":"F","round":1,"real":{"score":"2-2","winner":"Draw"}},{"a":"Sweden","b":"Tunisia","pa":44,"pd":24,"pb":32,"score":"1-1","pick":"Draw","xa":1.65,"xb":1.36,"group":"F","round":1,"real":{"score":"5-1","winner":"Sweden"}},{"a":"Netherlands","b":"Sweden","pa":59,"pd":21,"pb":20,"score":"2-1","pick":"Netherlands","xa":2.04,"xb":1.1,"group":"F","round":2},{"a":"Tunisia","b":"Japan","pa":15,"pd":19,"pb":66,"score":"0-2","pick":"Japan","xa":0.99,"xb":2.28,"group":"F","round":2},{"a":"Tunisia","b":"Netherlands","pa":16,"pd":19,"pb":65,"score":"1-2","pick":"Netherlands","xa":1.0,"xb":2.24,"group":"F","round":3},{"a":"Japan","b":"Sweden","pa":60,"pd":21,"pb":19,"score":"2-1","pick":"Japan","xa":2.07,"xb":1.09,"group":"F","round":3},{"a":"Belgium","b":"Egypt","pa":45,"pd":24,"pb":31,"score":"1-1","pick":"Draw","xa":1.67,"xb":1.35,"group":"G","round":1,"real":{"score":"1-1","winner":"Draw"}},{"a":"Iran","b":"New Zealand","pa":60,"pd":21,"pb":19,"score":"2-1","pick":"Iran","xa":2.07,"xb":1.09,"group":"G","round":1,"real":{"score":"2-2","winner":"Draw"}},{"a":"Belgium","b":"Iran","pa":49,"pd":23,"pb":28,"score":"1-1","pick":"Draw","xa":1.76,"xb":1.28,"group":"G","round":2},{"a":"New Zealand","b":"Egypt","pa":17,"pd":20,"pb":63,"score":"1-2","pick":"Egypt","xa":1.03,"xb":2.18,"group":"G","round":2},{"a":"New Zealand","b":"Belgium","pa":13,"pd":17,"pb":70,"score":"0-2","pick":"Belgium","xa":0.93,"xb":2.43,"group":"G","round":3},{"a":"Egypt","b":"Iran","pa":41,"pd":24,"pb":35,"score":"1-1","pick":"Draw","xa":1.58,"xb":1.42,"group":"G","round":3},{"a":"Spain","b":"Cabo Verde","pa":91,"pd":4,"pb":2,"score":"4-0","pick":"Spain","xa":4.15,"xb":0.54,"group":"H","round":1,"real":{"score":"0-0","winner":"Draw"}},{"a":"Saudi Arabia","b":"Uruguay","pa":17,"pd":20,"pb":63,"score":"1-2","pick":"Uruguay","xa":1.03,"xb":2.18,"group":"H","round":1,"real":{"score":"1-1","winner":"Draw"}},{"a":"Spain","b":"Saudi Arabia","pa":89,"pd":7,"pb":3,"score":"3-0","pick":"Spain","xa":3.66,"xb":0.62,"group":"H","round":2},{"a":"Uruguay","b":"Cabo Verde","pa":72,"pd":17,"pb":12,"score":"2-0","pick":"Uruguay","xa":2.48,"xb":0.91,"group":"H","round":2},{"a":"Uruguay","b":"Spain","pa":11,"pd":16,"pb":72,"score":"0-2","pick":"Spain","xa":0.89,"xb":2.52,"group":"H","round":3},{"a":"Cabo Verde","b":"Saudi Arabia","pa":30,"pd":24,"pb":46,"score":"1-1","pick":"Draw","xa":1.32,"xb":1.7,"group":"H","round":3},{"a":"France","b":"Senegal","pa":74,"pd":15,"pb":10,"score":"2-0","pick":"France","xa":2.58,"xb":0.87,"group":"I","round":1,"real":{"score":"3-1","winner":"France"}},{"a":"Iraq","b":"Norway","pa":11,"pd":16,"pb":73,"score":"0-2","pick":"Norway","xa":0.89,"xb":2.54,"group":"I","round":1},{"a":"France","b":"Iraq","pa":91,"pd":4,"pb":2,"score":"4-0","pick":"France","xa":4.2,"xb":0.54,"group":"I","round":2},{"a":"Norway","b":"Senegal","pa":41,"pd":24,"pb":35,"score":"1-1","pick":"Draw","xa":1.56,"xb":1.44,"group":"I","round":2},{"a":"Norway","b":"France","pa":12,"pd":17,"pb":72,"score":"0-2","pick":"France","xa":0.91,"xb":2.48,"group":"I","round":3},{"a":"Senegal","b":"Iraq","pa":71,"pd":17,"pb":12,"score":"2-0","pick":"Senegal","xa":2.44,"xb":0.92,"group":"I","round":3},{"a":"Argentina","b":"Algeria","pa":83,"pd":11,"pb":6,"score":"3-0","pick":"Argentina","xa":3.06,"xb":0.73,"group":"J","round":1},{"a":"Austria","b":"Jordan","pa":60,"pd":21,"pb":19,"score":"2-1","pick":"Austria","xa":2.07,"xb":1.09,"group":"J","round":1},{"a":"Argentina","b":"Austria","pa":83,"pd":11,"pb":6,"score":"3-0","pick":"Argentina","xa":3.07,"xb":0.73,"group":"J","round":2},{"a":"Jordan","b":"Algeria","pa":19,"pd":21,"pb":60,"score":"1-2","pick":"Algeria","xa":1.09,"xb":2.07,"group":"J","round":2},{"a":"Jordan","b":"Argentina","pa":1,"pd":4,"pb":91,"score":"0-4","pick":"Argentina","xa":0.53,"xb":4.23,"group":"J","round":3},{"a":"Algeria","b":"Austria","pa":38,"pd":24,"pb":38,"score":"1-1","pick":"Draw","xa":1.5,"xb":1.5,"group":"J","round":3},{"a":"Portugal","b":"DR Congo","pa":81,"pd":12,"pb":7,"score":"2-0","pick":"Portugal","xa":2.97,"xb":0.76,"group":"K","round":1},{"a":"Uzbekistan","b":"Colombia","pa":17,"pd":20,"pb":63,"score":"1-2","pick":"Colombia","xa":1.04,"xb":2.16,"group":"K","round":1},{"a":"Portugal","b":"Uzbekistan","pa":82,"pd":12,"pb":6,"score":"2-0","pick":"Portugal","xa":2.98,"xb":0.75,"group":"K","round":2},{"a":"Colombia","b":"DR Congo","pa":63,"pd":20,"pb":17,"score":"2-1","pick":"Colombia","xa":2.15,"xb":1.05,"group":"K","round":2},{"a":"Colombia","b":"Portugal","pa":19,"pd":21,"pb":60,"score":"1-2","pick":"Portugal","xa":1.09,"xb":2.07,"group":"K","round":3},{"a":"DR Congo","b":"Uzbekistan","pa":38,"pd":24,"pb":38,"score":"1-1","pick":"Draw","xa":1.51,"xb":1.49,"group":"K","round":3},{"a":"England","b":"Croatia","pa":64,"pd":20,"pb":17,"score":"2-1","pick":"England","xa":2.19,"xb":1.03,"group":"L","round":1},{"a":"Ghana","b":"Panama","pa":46,"pd":24,"pb":30,"score":"1-1","pick":"Draw","xa":1.7,"xb":1.32,"group":"L","round":1},{"a":"England","b":"Ghana","pa":81,"pd":12,"pb":7,"score":"2-0","pick":"England","xa":2.96,"xb":0.76,"group":"L","round":2},{"a":"Panama","b":"Croatia","pa":14,"pd":18,"pb":67,"score":"0-2","pick":"Croatia","xa":0.97,"xb":2.31,"group":"L","round":2},{"a":"Panama","b":"England","pa":4,"pd":9,"pb":86,"score":"0-3","pick":"England","xa":0.67,"xb":3.36,"group":"L","round":3},{"a":"Croatia","b":"Ghana","pa":59,"pd":21,"pb":20,"score":"2-1","pick":"Croatia","xa":2.03,"xb":1.11,"group":"L","round":3}];
+const PLAYED=[];const BLIND=ALLMATCHES;
+let CURRENT_ROUND=1;
 const cardsBox=document.getElementById('matchCards');
 function predLabel(m){return m.pick==="Draw"?t("draw"):TN(m.pick);}
 function matchNote(m){
@@ -770,10 +894,9 @@ function mcard(m){
  const el=document.createElement('div');el.className='mcard glass rv';el.style.cursor='pointer';
  el.onclick=()=>openModal(m);
  let status='',scores='';
- if(m.real){ done++;
+ if(m.real){
    const wdlOk = m.real.winner===m.pick;       // 输赢方向
    const exactOk = m.real.score===m.score;      // 具体比分
-   if(wdlOk)wdlHit++; if(exactOk)exactHit++;
    el.classList.add('done');
    let badge;
    if(exactOk) badge=`<div class="mc-status done exact">${t('exact')}</div>`;
@@ -798,17 +921,35 @@ function mcard(m){
 }
 function renderAllMatches(){
  cardsBox.innerHTML='';done=0;wdlHit=0;exactHit=0;
- PLAYED.forEach(mcard);BLIND.forEach(mcard);
+ // accuracy counts across ALL finished matches (every round)
+ ALLMATCHES.forEach(m=>{ if(m.real){ done++;
+   if(m.real.winner===m.pick)wdlHit++;
+   if(m.real.score===m.score)exactHit++; }});
+ // but only render cards for the current round
+ ALLMATCHES.filter(m=>m.round===CURRENT_ROUND).forEach(mcard);
  document.getElementById('sc-done').textContent=done;
  document.getElementById('sc-wdl').textContent=done?Math.round(wdlHit/done*100)+'%':'—';
  document.getElementById('sc-exact').textContent=done?Math.round(exactHit/done*100)+'%':'—';
  document.getElementById('sc-wdl-frac').textContent=done?`${wdlHit}/${done}`:'';
  document.getElementById('sc-exact-frac').textContent=done?`${exactHit}/${done}`:'';
 }
-renderAllMatches();
+function renderRoundTabs(){
+ const rt=document.getElementById('roundTabs');if(!rt)return;rt.innerHTML='';
+ const labels={1:{zh:'第 1 轮',en:'Matchday 1'},2:{zh:'第 2 轮',en:'Matchday 2'},3:{zh:'第 3 轮',en:'Matchday 3'}};
+ [1,2,3].forEach(r=>{
+   const done=ALLMATCHES.filter(m=>m.round===r&&m.real).length;
+   const tab=document.createElement('button');
+   tab.className='round-tab'+(r===CURRENT_ROUND?' active':'');
+   tab.innerHTML=`${labels[r][LANG]} <span class="rt-cnt">${done}/24</span>`;
+   tab.onclick=()=>{CURRENT_ROUND=r;renderRoundTabs();renderAllMatches();};
+   rt.appendChild(tab);
+ });
+}
+function renderMatchSection(){renderRoundTabs();renderAllMatches();}
+renderMatchSection();
 
 /* ====== language engine ====== */
-const STATIC={"refreshAbout":{"zh":"<b>↻ 关于更新</b> 本页为静态页面。随着赛事进行,比分与命中率会更新——更新方式是告知作者「刷新世界杯预测」,即可抓取最新真实比分并重新生成本页。","en":"<b>↻ About updates</b> This is a static page. As the tournament unfolds, scores and accuracy are refreshed on request — ask for a refresh and the page is regenerated with the latest real results."},"slineLabel":{"zh":"最可能比分","en":"Most likely score"},"lede":{"zh":"基于五维实力评分的独立预测模型,不直接采用博彩赔率,而是以可观测信号独立打分后再与市场对照。模型已在两届欧洲冠军联赛淘汰赛上回测验证(30场命中25场);并依据本届前4场真实结果对东道主分级加成与进球模型做了二次校准(校准前原始模型胜负命中3/4,校准后4场预测均与结果方向一致)。","en":"An independent prediction model built on five strength dimensions. Instead of taking bookmaker odds directly, it scores teams from observable signals and then compares against the market. Backtested on two seasons of Champions League knockouts (25 of 30 correct), and recalibrated on this tournament's first 4 real results (the original model went 3/4 on outcomes; after calibration all 4 matched the actual result direction)."},"stUCL":{"zh":"欧冠回测","en":"UCL backtest"},"stTeams":{"zh":"参赛队","en":"teams"},"stGroups":{"zh":"小组全预测","en":"groups predicted"},"stBlind":{"zh":"盲测锁定","en":"locked predictions"},"stamp":{"zh":"数据快照 2026-06-14(已结束8场:含巴西1-1摩洛哥、海地0-1苏格兰、澳大利亚2-0土耳其;14号德/荷/日待赛) · 模型据真实结果校准","en":"Snapshot: Jun 14 (8 final: incl. Brazil 1-1 Morocco, Haiti 0-1 Scotland, Australia 2-0 Türkiye; Jun 14 Germany/Netherlands/Japan upcoming) · model calibrated on real results"},"h1":{"zh":"赛事进程","en":"Tournament Progress"},"d1":{"zh":"世界杯从48队逐层淘汰到1个冠军。下面是各阶段的实时进度——<span style=\"color:#ff9b9b\">● 进行中</span>的阶段已有真实数据,<span style=\"color:var(--muted2)\">● 待产生/未开始</span>的阶段在上一阶段结束后揭晓。点击任意阶段跳转到对应详情。","en":"The World Cup narrows from 48 teams to one champion. Below is live progress per stage — <span style=\"color:#ff9b9b\">● in-progress</span> stages have real data, <span style=\"color:var(--muted2)\">● TBD/not-started</span> stages reveal once the prior stage ends. Tap any stage to jump to its section."},"h2":{"zh":"小组赛 · 出线与比分预测","en":"Group Stage · Standings & Score Predictions"},"d2":{"zh":"每组左侧为预测出线排位(<span style=\"color:var(--gold)\">金=头名</span>、白=次名),右侧为该组全部6场对阵的预测比分,点击任意场次看详情。C组摩洛哥预测压制巴西位列头名。","en":"Left: predicted standings (<span style=\"color:var(--gold)\">gold = 1st</span>, white = 2nd). Right: predicted scores for all 6 group matches — tap any match for details. In Group C, Morocco is predicted to edge Brazil for top spot."},"h3":{"zh":"逐场预测 · 实时对照","en":"Match-by-Match · Live vs Predicted"},"d3":{"zh":"每场卡片标注:<span style=\"color:var(--gold)\">● 已结束</span>对比预测与真实并计入命中率,<span style=\"color:var(--muted2)\">● 待赛</span>为已锁定的预测(每天比赛结束后统一更新)。命中分两档:<b style=\"color:#fff\">输赢命中</b>(胜平负方向对)与<b style=\"color:#fff\">比分命中</b>(具体比分也对)。金标为模型与市场分歧较大的对阵。","en":"Each card is tagged: <span style=\"color:var(--gold)\">● final</span> compares predicted vs actual and counts toward accuracy; <span style=\"color:var(--muted2)\">● upcoming</span> is a locked prediction (updated once per day after matches finish). Two accuracy tiers: <b style=\"color:#fff\">result</b> (W/D/L direction) and <b style=\"color:#fff\">exact score</b>. Gold tags mark matches where the model diverges most from the market."},"h4":{"zh":"淘汰赛对阵树 · 预测","en":"Knockout Bracket · Predicted"},"d4":{"zh":"小组赛结束后,32强对阵将正式产生。当前为模型基于实力评分推演的<b>最可能晋级路径</b>(从八强到决赛),小组赛打完后此处会更新为真实对阵。连线随滚动生长,手机可横滑。","en":"The Round of 32 is set once the group stage ends. Shown here is the model's <b>most-likely path</b> from the quarter-finals onward; it will update to the real bracket after groups finish. Lines draw in on scroll; swipe horizontally on mobile."},"h5":{"zh":"夺冠概率","en":"Title Odds"},"d5":{"zh":"独立模型经4万次蒙特卡洛模拟得出。法国与阿根廷并列领跑,西班牙居第三,摩洛哥进入前六,巴西因伤病减员跌出第一档。","en":"From 40,000 Monte Carlo simulations of the independent model. France and Argentina lead jointly, Spain third, Morocco inside the top six, and an injury-hit Brazil drops out of the top tier."},"h6":{"zh":"模型与市场的分歧","en":"Model vs Market"},"d6":{"zh":"独立评分完成后与博彩市场对照,以下四处存在明显分歧。每处均有具体依据,分歧通常对应潜在冷门或高估对象。","en":"After scoring independently, comparing against the betting market reveals four clear disagreements. Each has a concrete basis; divergences often flag potential upsets or overrated sides."},"h7":{"zh":"模型可信度 · 欧冠回测","en":"Model Credibility · UCL Backtest"},"d7":{"zh":"这套预测靠不靠谱?用同一套引擎对两届已结束的欧洲冠军联赛淘汰赛回测,仅用赛前信息打分。30场命中25场(83%),反映模型在真实赛事上的判别能力。","en":"Is this any good? The same engine was backtested on two completed Champions League knockout stages, scoring from pre-match info only. 25 of 30 correct (83%) — a read on the model's real-world discrimination."},"h8":{"zh":"自己推演","en":"Run Your Own"},"d8":{"zh":"选两队,同一套泊松引擎算胜平负与最可能比分,规则对每场一致。","en":"Pick two teams; the same Poisson engine computes W/D/L and the most likely score — identical rules for every match."},"h9":{"zh":"方法","en":"Method"},"sbDone":{"zh":"已结束","en":"Final"},"sbWdl":{"zh":"输赢","en":"Result"},"sbExact":{"zh":"比分","en":"Exact"},"sbRate":{"zh":"输赢命中率","en":"Result %"},"refreshBtn":{"zh":"↻ 刷新比分","en":"↻ Refresh scores"},"refreshNote":{"zh":"输赢命中=胜平负方向对;比分命中=连具体比分都对。比分会随赛事更新——目前没有可靠的免费实时数据源能直连静态网页,所以更新方式是:告知作者「刷新世界杯预测」,即可抓取最新真实比分并重新生成本页。","en":"Result hit = W/D/L direction matches; exact hit = exact score matches. Scores update as the tournament progresses — there is no reliable free real-time feed that a static page can call directly, so updates work by request: ask for a refresh and the page is regenerated with the latest real results."},"ringSub":{"zh":"25 / 30 场命中","en":"25 / 30 correct"},"bt1":{"zh":"2024-25 赛季<small>冠军 PSG · 模型预测正确</small>","en":"2024-25<small>Champion PSG · model correct</small>"},"bt2":{"zh":"2025-26 赛季<small>冠军 PSG · 模型预测正确</small>","en":"2025-26<small>Champion PSG · model correct</small>"},"btNote":{"zh":"两届冠军均被模型提前命中。<b>5场预测偏差全部为公认冷门</b>——国际米兰连克拜仁与巴萨、阿森纳淘汰皇马、马竞爆冷巴萨。模型在实力分明的对阵中判别力强,在势均力敌的对阵中倾向实力略高一方,这是概率模型的固有边界。","en":"Both champions were called in advance. <b>All 5 misses were recognized upsets</b> — Inter beating Bayern then Barcelona, Arsenal ousting Real Madrid, Atlético shocking Barça. The model is strong when strength gaps are clear, and leans to the slightly stronger side in coin-flip ties — an inherent limit of probability models."},"btSum":{"zh":"展开5场预测偏差的比赛","en":"Show the 5 missed ties"},"btm1":{"zh":"<b>利物浦 vs PSG</b>　模型倾向利物浦(信心仅53%),PSG点球晋级","en":"<b>Liverpool vs PSG</b>　model leaned Liverpool (just 53%), PSG won on penalties"},"btm2":{"zh":"<b>拜仁 vs 国际米兰</b>　60%倾向拜仁,国米爆冷","en":"<b>Bayern vs Inter</b>　60% on Bayern, Inter upset them"},"btm3":{"zh":"<b>皇马 vs 阿森纳</b>　模型倾向皇马,阿森纳双回合取胜","en":"<b>Real Madrid vs Arsenal</b>　model leaned Real, Arsenal won both legs"},"btm4":{"zh":"<b>巴萨 vs 国际米兰</b>　模型倾向巴萨,国米两回合7-6逆转","en":"<b>Barça vs Inter</b>　model leaned Barça, Inter edged 7-6 on aggregate"},"btm5":{"zh":"<b>巴萨 vs 马竞</b>　模型倾向巴萨,马竞爆冷","en":"<b>Barça vs Atlético</b>　model leaned Barça, Atlético upset them"},"m1h":{"zh":"五维独立评分","en":"Five-dimension scoring"},"m2h":{"zh":"独立于赔率","en":"Independent of odds"},"m3h":{"zh":"泊松进球模型","en":"Poisson goal model"},"m4h":{"zh":"回测与待验证","en":"Backtested & pending"},"m1p":{"zh":"阵容34%·状态20%·战术16%·底蕴14%·伤病16%,权重固定、对所有球队一致。伤病是关键变量,巴西因此显著下调。","en":"Squad 34% · form 20% · tactics 16% · pedigree 14% · fitness 16%, fixed weights applied identically to every team. Fitness is the key swing factor — it dropped Brazil sharply."},"m2p":{"zh":"评分仅基于可观测信号,完成后再与市场对照。市场作为参照系而非依据,分歧处提供额外信息。","en":"Scores come only from observable signals, then get compared against the market afterward. The market is a reference, not an input; divergences add information."},"m3p":{"zh":"评分差转换为各队期望进球,再得出每个比分的概率。同一函数应用于全部比赛,规则一致。","en":"Rating gaps convert to each side's expected goals, then to the probability of every scoreline. The same function applies to all matches — consistent rules."},"m4p":{"zh":"历史回测(欧冠83%)验证判别力,首轮20场预测锁定待真实结果检验。偏差如实标注。","en":"History backtest (UCL 83%) validates discrimination; 20 first-round predictions are locked, awaiting real results. Misses are flagged honestly."},"kicker":{"zh":"独立模型 · 已回测 · 绿茵版","en":"Independent Model · Backtested · Pitch Edition"},"footer":{"zh":"冠军概率最高约20%,意味着多数情形下夺冠者为其他球队,这是淘汰赛的固有不确定性。回测83%反映模型在实力分明对阵中的判别力,对纯粹冷门的预测能力有限。模型仅供娱乐参考。<br><br>数据截至 2026-06-13 · 仅供娱乐 ⚽","en":"The top title probability is only ~20%, meaning the champion is usually someone else — the inherent uncertainty of knockout football. The 83% backtest reflects discrimination in clear-gap ties; pure upsets are beyond any model. For entertainment only.<br><br>Data through Jun 13, 2026 · For fun only ⚽"}};
+const STATIC={"hUpset":{"zh":"冷门风险榜","en":"Upset Risk Board"},"dUpset":{"zh":"冷门具体哪场发生是随机的、无法预测,但\"哪些对阵结构上冷门风险高\"是有规律的。本榜不预测谁爆冷,而是基于客观信号(首秀新军数据少、巨星队首战磨合、死守型弱旅、实力接近)标出高风险对阵并说明原因。已发生的标注是否应验。","en":"Which specific match produces an upset is random and unpredictable — but which matchups are structurally upset-prone follows patterns. This board does not predict who wins; it flags high-risk matchups from objective signals (thin-data debutants, star-reliant favorites in openers, bus-parking underdogs, close ratings) and explains why. Played matches show whether the risk materialized."},"refreshAbout":{"zh":"<b>↻ 关于更新</b> 本页为静态页面。随着赛事进行,比分与命中率会更新——更新方式是告知作者「刷新世界杯预测」,即可抓取最新真实比分并重新生成本页。","en":"<b>↻ About updates</b> This is a static page. As the tournament unfolds, scores and accuracy are refreshed on request — ask for a refresh and the page is regenerated with the latest real results."},"slineLabel":{"zh":"最可能比分","en":"Most likely score"},"lede":{"zh":"基于五维实力评分的独立预测模型,不直接采用博彩赔率,而是以可观测信号独立打分后再与市场对照。模型已在两届欧洲冠军联赛淘汰赛上回测验证(30场命中25场);并依据本届前4场真实结果对东道主分级加成与进球模型做了二次校准(校准前原始模型胜负命中3/4,校准后4场预测均与结果方向一致)。","en":"An independent prediction model built on five strength dimensions. Instead of taking bookmaker odds directly, it scores teams from observable signals and then compares against the market. Backtested on two seasons of Champions League knockouts (25 of 30 correct), and recalibrated on this tournament's first 4 real results (the original model went 3/4 on outcomes; after calibration all 4 matched the actual result direction)."},"stUCL":{"zh":"欧冠回测","en":"UCL backtest"},"stTeams":{"zh":"参赛队","en":"teams"},"stGroups":{"zh":"小组全预测","en":"groups predicted"},"stBlind":{"zh":"盲测锁定","en":"locked predictions"},"stamp":{"zh":"数据快照 2026-06-16(已结束8场:含巴西1-1摩洛哥、海地0-1苏格兰、澳大利亚2-0土耳其;16号德/荷/日待赛) · 模型据真实结果校准","en":"Snapshot: Jun 16 (8 final: incl. Brazil 1-1 Morocco, Haiti 0-1 Scotland, Australia 2-0 Türkiye; Jun 16 Germany/Netherlands/Japan upcoming) · model calibrated on real results"},"h1":{"zh":"赛事进程","en":"Tournament Progress"},"d1":{"zh":"世界杯从48队逐层淘汰到1个冠军。下面是各阶段的实时进度——<span style=\"color:#ff9b9b\">● 进行中</span>的阶段已有真实数据,<span style=\"color:var(--muted2)\">● 待产生/未开始</span>的阶段在上一阶段结束后揭晓。点击任意阶段跳转到对应详情。","en":"The World Cup narrows from 48 teams to one champion. Below is live progress per stage — <span style=\"color:#ff9b9b\">● in-progress</span> stages have real data, <span style=\"color:var(--muted2)\">● TBD/not-started</span> stages reveal once the prior stage ends. Tap any stage to jump to its section."},"h2":{"zh":"小组赛 · 出线与比分预测","en":"Group Stage · Standings & Score Predictions"},"d2":{"zh":"每组左侧为预测出线排位(<span style=\"color:var(--gold)\">金=头名</span>、白=次名),右侧为该组全部6场对阵的预测比分,点击任意场次看详情。C组摩洛哥预测压制巴西位列头名。","en":"Left: predicted standings (<span style=\"color:var(--gold)\">gold = 1st</span>, white = 2nd). Right: predicted scores for all 6 group matches — tap any match for details. In Group C, Morocco is predicted to edge Brazil for top spot."},"h3":{"zh":"逐场预测 · 实时对照","en":"Match-by-Match · Live vs Predicted"},"d3":{"zh":"每场卡片标注:<span style=\"color:var(--gold)\">● 已结束</span>对比预测与真实并计入命中率,<span style=\"color:var(--muted2)\">● 待赛</span>为已锁定的预测(每天比赛结束后统一更新)。命中分两档:<b style=\"color:#fff\">输赢命中</b>(胜平负方向对)与<b style=\"color:#fff\">比分命中</b>(具体比分也对)。金标为模型与市场分歧较大的对阵。","en":"Each card is tagged: <span style=\"color:var(--gold)\">● final</span> compares predicted vs actual and counts toward accuracy; <span style=\"color:var(--muted2)\">● upcoming</span> is a locked prediction (updated once per day after matches finish). Two accuracy tiers: <b style=\"color:#fff\">result</b> (W/D/L direction) and <b style=\"color:#fff\">exact score</b>. Gold tags mark matches where the model diverges most from the market."},"koBracketLabel":{"zh":"▼ 以下为模型推演的最可能晋级路径(8强→决赛)","en":"▼ Below: model's most-likely path (QF → Final)"},"h4":{"zh":"淘汰赛对阵树 · 预测","en":"Knockout Bracket · Predicted"},"d4":{"zh":"完整淘汰赛阶梯:32强→16强→8强→半决赛→决赛。具体对阵<b>待小组赛结束</b>才能确定,下方框架先占位标“待定”,小组赛打完后填入真实对阵。再往下是模型当前推演的最可能晋级路径。","en":"The full knockout ladder: R32 → R16 → QF → SF → Final. Specific matchups are <b>set only after the group stage</b>; the framework below holds TBD placeholders to be filled once groups finish. Further down is the model's current most-likely path."},"h5":{"zh":"夺冠概率","en":"Title Odds"},"d5":{"zh":"独立模型经4万次蒙特卡洛模拟得出。法国与阿根廷并列领跑,西班牙居第三,摩洛哥进入前六,巴西因伤病减员跌出第一档。","en":"From 40,000 Monte Carlo simulations of the independent model. France and Argentina lead jointly, Spain third, Morocco inside the top six, and an injury-hit Brazil drops out of the top tier."},"h6":{"zh":"模型与市场的分歧","en":"Model vs Market"},"d6":{"zh":"独立评分完成后与博彩市场对照,以下四处存在明显分歧。每处均有具体依据,分歧通常对应潜在冷门或高估对象。","en":"After scoring independently, comparing against the betting market reveals four clear disagreements. Each has a concrete basis; divergences often flag potential upsets or overrated sides."},"h7":{"zh":"模型可信度 · 欧冠回测","en":"Model Credibility · UCL Backtest"},"d7":{"zh":"这套预测靠不靠谱?用同一套引擎对两届已结束的欧洲冠军联赛淘汰赛回测,仅用赛前信息打分。30场命中25场(83%),反映模型在真实赛事上的判别能力。","en":"Is this any good? The same engine was backtested on two completed Champions League knockout stages, scoring from pre-match info only. 25 of 30 correct (83%) — a read on the model's real-world discrimination."},"h8":{"zh":"自己推演","en":"Run Your Own"},"d8":{"zh":"选两队,同一套泊松引擎算胜平负与最可能比分,规则对每场一致。","en":"Pick two teams; the same Poisson engine computes W/D/L and the most likely score — identical rules for every match."},"h9":{"zh":"方法","en":"Method"},"sbDone":{"zh":"已结束","en":"Final"},"sbWdl":{"zh":"输赢","en":"Result"},"sbExact":{"zh":"比分","en":"Exact"},"sbRate":{"zh":"输赢命中率","en":"Result %"},"refreshBtn":{"zh":"↻ 刷新比分","en":"↻ Refresh scores"},"refreshNote":{"zh":"输赢命中=胜平负方向对;比分命中=连具体比分都对。比分会随赛事更新——目前没有可靠的免费实时数据源能直连静态网页,所以更新方式是:告知作者「刷新世界杯预测」,即可抓取最新真实比分并重新生成本页。","en":"Result hit = W/D/L direction matches; exact hit = exact score matches. Scores update as the tournament progresses — there is no reliable free real-time feed that a static page can call directly, so updates work by request: ask for a refresh and the page is regenerated with the latest real results."},"ringSub":{"zh":"25 / 30 场命中","en":"25 / 30 correct"},"bt1":{"zh":"2024-25 赛季<small>冠军 PSG · 模型预测正确</small>","en":"2024-25<small>Champion PSG · model correct</small>"},"bt2":{"zh":"2025-26 赛季<small>冠军 PSG · 模型预测正确</small>","en":"2025-26<small>Champion PSG · model correct</small>"},"btNote":{"zh":"两届冠军均被模型提前命中。<b>5场预测偏差全部为公认冷门</b>——国际米兰连克拜仁与巴萨、阿森纳淘汰皇马、马竞爆冷巴萨。模型在实力分明的对阵中判别力强,在势均力敌的对阵中倾向实力略高一方,这是概率模型的固有边界。","en":"Both champions were called in advance. <b>All 5 misses were recognized upsets</b> — Inter beating Bayern then Barcelona, Arsenal ousting Real Madrid, Atlético shocking Barça. The model is strong when strength gaps are clear, and leans to the slightly stronger side in coin-flip ties — an inherent limit of probability models."},"btSum":{"zh":"展开5场预测偏差的比赛","en":"Show the 5 missed ties"},"btm1":{"zh":"<b>利物浦 vs PSG</b>　模型倾向利物浦(信心仅53%),PSG点球晋级","en":"<b>Liverpool vs PSG</b>　model leaned Liverpool (just 53%), PSG won on penalties"},"btm2":{"zh":"<b>拜仁 vs 国际米兰</b>　60%倾向拜仁,国米爆冷","en":"<b>Bayern vs Inter</b>　60% on Bayern, Inter upset them"},"btm3":{"zh":"<b>皇马 vs 阿森纳</b>　模型倾向皇马,阿森纳双回合取胜","en":"<b>Real Madrid vs Arsenal</b>　model leaned Real, Arsenal won both legs"},"btm4":{"zh":"<b>巴萨 vs 国际米兰</b>　模型倾向巴萨,国米两回合7-6逆转","en":"<b>Barça vs Inter</b>　model leaned Barça, Inter edged 7-6 on aggregate"},"btm5":{"zh":"<b>巴萨 vs 马竞</b>　模型倾向巴萨,马竞爆冷","en":"<b>Barça vs Atlético</b>　model leaned Barça, Atlético upset them"},"m1h":{"zh":"五维独立评分","en":"Five-dimension scoring"},"m2h":{"zh":"独立于赔率","en":"Independent of odds"},"m3h":{"zh":"泊松进球模型","en":"Poisson goal model"},"m4h":{"zh":"回测与待验证","en":"Backtested & pending"},"m1p":{"zh":"阵容34%·状态20%·战术16%·底蕴14%·伤病16%,权重固定、对所有球队一致。伤病是关键变量,巴西因此显著下调。","en":"Squad 34% · form 20% · tactics 16% · pedigree 14% · fitness 16%, fixed weights applied identically to every team. Fitness is the key swing factor — it dropped Brazil sharply."},"m2p":{"zh":"评分仅基于可观测信号,完成后再与市场对照。市场作为参照系而非依据,分歧处提供额外信息。","en":"Scores come only from observable signals, then get compared against the market afterward. The market is a reference, not an input; divergences add information."},"m3p":{"zh":"评分差转换为各队期望进球,再得出每个比分的概率。同一函数应用于全部比赛,规则一致。","en":"Rating gaps convert to each side's expected goals, then to the probability of every scoreline. The same function applies to all matches — consistent rules."},"m4p":{"zh":"历史回测(欧冠83%)验证判别力,首轮20场预测锁定待真实结果检验。偏差如实标注。","en":"History backtest (UCL 83%) validates discrimination; 20 first-round predictions are locked, awaiting real results. Misses are flagged honestly."},"kicker":{"zh":"独立模型 · 已回测 · 绿茵版","en":"Independent Model · Backtested · Pitch Edition"},"footer":{"zh":"冠军概率最高约20%,意味着多数情形下夺冠者为其他球队,这是淘汰赛的固有不确定性。回测83%反映模型在实力分明对阵中的判别力,对纯粹冷门的预测能力有限。模型仅供娱乐参考。<br><br>数据截至 2026-06-16 · 仅供娱乐 ⚽","en":"The top title probability is only ~20%, meaning the champion is usually someone else — the inherent uncertainty of knockout football. The 83% backtest reflects discrimination in clear-gap ties; pure upsets are beyond any model. For entertainment only.<br><br>Data through Jun 16, 2026 · For fun only ⚽"}};
 function applyStatic(){
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.getAttribute('data-i18n');
@@ -821,7 +962,7 @@ function setLang(l){
   document.getElementById('langToggle').textContent = (l==='zh'?'EN':'中');
   applyStatic();
   // re-render all dynamic pieces
-  renderFunnel(); renderDV(); renderGroups(); renderBracket(); renderAllMatches();
+  renderFunnel(); renderDV(); renderUpset(); renderGroups(); renderBracket(); renderKOStages(); renderMatchSection();
   // duel selects: rebuild option labels
   [sa,sb].forEach(sel=>{const v=sel.value;[...sel.options].forEach(o=>{o.text=TN(o.value);});sel.value=v;});
   if(typeof render==='function') render();
