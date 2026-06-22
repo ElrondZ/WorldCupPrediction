@@ -161,6 +161,67 @@
   .diverge{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
   /* ===== UPSET RISK ===== */
   .upset-grid{display:flex;flex-direction:column;gap:12px}
+  /* ---- accuracy: league-table style ---- */
+  .acc-card{padding:0;overflow:hidden}
+  .acc-top{display:flex;align-items:stretch;gap:0;border-bottom:1px solid var(--line-faint)}
+  .acc-hero{flex:0 0 auto;padding:26px 30px;position:relative;border-right:1px solid var(--line-faint);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:208px;overflow:hidden}
+  .acc-hero::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:172px;height:172px;border-radius:50%;border:1.5px solid var(--line-faint);opacity:.45;pointer-events:none}
+  .acc-hero .eyebrow{display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono';font-size:9.5px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;position:relative;z-index:1}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:#46e08a;position:relative;flex:none;
+    box-shadow:0 0 0 0 rgba(70,224,138,.6);animation:livePulse 1.8s ease-out infinite}
+  @keyframes livePulse{
+    0%{box-shadow:0 0 0 0 rgba(70,224,138,.55)}
+    70%{box-shadow:0 0 0 9px rgba(70,224,138,0)}
+    100%{box-shadow:0 0 0 0 rgba(70,224,138,0)}}
+  .acc-hero .pct{font-family:'Bebas Neue';font-size:84px;line-height:.78;color:var(--gold);
+    text-shadow:0 0 38px rgba(255,210,74,.4);position:relative;z-index:1;white-space:nowrap}
+  .acc-hero .pct small{font-size:32px}
+  .acc-hero .frac{font-family:'JetBrains Mono';font-size:11px;color:var(--muted2);margin-top:9px;letter-spacing:.04em;position:relative;z-index:1;white-space:nowrap}
+  .acc-intro{flex:1;padding:24px 26px;display:flex;flex-direction:column;justify-content:center}
+  .acc-intro h3{font-family:'Bebas Neue';font-size:23px;letter-spacing:.6px;margin:0 0 8px;color:#fff}
+  .acc-intro p{font-size:11.5px;color:var(--muted2);line-height:1.6;margin:0}
+  .acc-table{padding:6px 0 4px}
+  .acc-legend{font-family:'JetBrains Mono';font-size:9.5px;color:var(--muted2);padding:10px 24px 2px;letter-spacing:.02em;display:flex;align-items:center;gap:7px}
+  .acc-legend::before{content:"";width:14px;border-top:2px solid #ff5a6e;flex:none}
+  .acc-r{display:grid;grid-template-columns:26px 150px 1fr 56px;align-items:center;gap:14px;
+    padding:11px 24px;border-bottom:1px solid var(--line-faint);position:relative}
+  .acc-r:last-child{border-bottom:none}
+  .acc-r .rank{font-family:'JetBrains Mono';font-size:11px;color:var(--muted2);text-align:center}
+  .acc-r .who{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .acc-r .who b{font-family:'Space Grotesk';font-weight:600;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .acc-r .who span{font-size:9.5px;color:var(--muted2);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .acc-r .bar{height:10px;width:100%;min-width:60px;border-radius:5px;background:rgba(255,255,255,.07);position:relative}
+  .acc-r .bar i{position:absolute;left:0;top:0;height:100%;border-radius:5px;background:var(--line-soft);display:block}
+  .acc-r .bar .mark{position:absolute;top:-4px;height:18px;width:2px;background:#ff5a6e;z-index:5;pointer-events:none;transform:translateX(-1px)}
+  .acc-r .bar .mark::after{content:"";position:absolute;left:-2px;top:-4px;width:6px;height:6px;border-radius:50%;background:#ff5a6e}
+  .acc-r .num{font-family:'Bebas Neue';font-size:21px;line-height:1;color:var(--muted);text-align:right;letter-spacing:.5px;white-space:nowrap}
+  /* highlighted model row */
+  .acc-r.me{background:linear-gradient(90deg,rgba(255,210,74,.10),rgba(255,210,74,0))}
+  .acc-r.me::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold)}
+  .acc-r.me .rank{color:var(--gold)}
+  .acc-r.me .who b{color:#fff}
+  .acc-r.me .bar i{background:linear-gradient(90deg,var(--gold-d),var(--gold))}
+  .acc-r.me .num{color:var(--gold)}
+  /* theoretical ceiling row — reference line, not a ranked rival */
+  .acc-r.ceil{border-bottom:1px dashed var(--line-faint);opacity:.72}
+  .acc-r.ceil .rank{color:var(--muted2);font-size:13px}
+  .acc-r.ceil .who b{color:var(--muted2);font-style:italic}
+  .acc-r.ceil .bar i{background:repeating-linear-gradient(90deg,var(--line-faint) 0 5px,transparent 5px 9px)}
+  .acc-r.ceil .num{color:var(--muted2)}
+  .acc-foot{padding:13px 24px 16px;border-top:1px solid var(--line-faint);
+    font-size:10.5px;color:var(--muted2);line-height:1.55}
+  .acc-foot b{color:var(--muted)}
+  @media(max-width:600px){
+    .acc-top{flex-direction:column}
+    .acc-hero{border-right:none;border-bottom:1px solid var(--line-faint);min-width:0;padding:22px 24px}
+    .acc-hero .pct{font-size:68px}
+    .acc-r{grid-template-columns:22px 1fr 50px;gap:10px;padding:10px 18px}
+    .acc-r .bar{display:none}
+    .acc-r .who span{display:none}
+  }
   .upset-stats{display:flex;align-items:center;gap:18px;padding:14px 18px;flex-wrap:wrap}
   .upset-stats .us-rate{display:flex;flex-direction:column;align-items:center;min-width:74px}
   .upset-stats .us-big{font-family:'Bebas Neue';font-size:42px;line-height:.85;color:#ff8a7a}
@@ -403,16 +464,14 @@
     <div class="kicker rv" data-i18n="kicker"></div>
     <h1 class="big"><span class="l1 rv">WORLD CUP</span><span class="l2 rv d1">2026</span></h1>
     <p class="lede rv d2" data-i18n="lede"></p>
-    <div class="hero-stats rv d3">
-      <div class="hs"><div class="v" data-count="83">0<small>%</small></div><div class="k" data-i18n="stUCL"></div></div>
-      <div class="hs"><div class="v" data-count="48">0</div><div class="k" data-i18n="stTeams"></div></div>
-      <div class="hs"><div class="v" data-count="12">0</div><div class="k" data-i18n="stGroups"></div></div>
-      <div class="hs"><div class="v" data-count="20">0</div><div class="k" data-i18n="stBlind"></div></div>
-    </div>
   </div>
 </header>
 
 <div class="wrap">
+
+<section id="accuracy">
+  <div class="acc-card glass rv" id="accCard"></div>
+</section>
 
 <section id="funnel">
   <div class="sh rv"><span class="num">01</span><h2 data-i18n="h1"></h2></div>
@@ -491,26 +550,6 @@
   </div>
 </section>
 
-<section id="play">
-  <div class="sh rv"><span class="num">08</span><h2 data-i18n="h8"></h2></div>
-  <p class="sd rv" data-i18n="d8"></p>
-  <div class="duel glass rv">
-    <div class="drow"><select id="selA"></select><span class="vs">VS</span><select id="selB"></select></div>
-    <div class="pbar"><div class="a" id="pa"></div><div class="d" id="pd"></div><div class="b" id="pb"></div></div>
-    <div class="sline"><span data-i18n="slineLabel"></span><b id="sl">—</b></div>
-  </div>
-</section>
-
-<section id="method">
-  <div class="sh rv"><span class="num">09</span><h2 data-i18n="h9"></h2></div>
-  <div class="method">
-    <div class="mc glass rv"><div class="n">01</div><div class="h" data-i18n="m1h"></div><p data-i18n="m1p"></p></div>
-    <div class="mc glass rv d1"><div class="n">02</div><div class="h" data-i18n="m2h"></div><p data-i18n="m2p"></p></div>
-    <div class="mc glass rv d2"><div class="n">03</div><div class="h" data-i18n="m3h"></div><p data-i18n="m3p"></p></div>
-    <div class="mc glass rv d3"><div class="n">04</div><div class="h" data-i18n="m4h"></div><p data-i18n="m4p"></p></div>
-  </div>
-</section>
-
 </div>
 
 <footer>
@@ -555,7 +594,11 @@ const I18N={
  f32Detail:{zh:"小组赛结束后揭晓",en:"after group stage"},
  fFinalDate:{zh:"7/19 纽约",en:"Jul 19 · NY"},
 };
-const t=k=> (I18N[k]?I18N[k][LANG]:k);
+const t=k=>{
+  if(I18N[k]) return I18N[k][LANG];
+  try{ if(typeof STATIC!=='undefined'&&STATIC&&STATIC[k]) return STATIC[k][LANG]; }catch(e){}
+  return k;
+};
 
 const CN={"Spain":"西班牙","France":"法国","England":"英格兰","Brazil":"巴西","Argentina":"阿根廷","Portugal":"葡萄牙","Germany":"德国","Netherlands":"荷兰","Belgium":"比利时","Norway":"挪威","Colombia":"哥伦比亚","Croatia":"克罗地亚","Uruguay":"乌拉圭","Morocco":"摩洛哥","Switzerland":"瑞士","Senegal":"塞内加尔","Japan":"日本","Mexico":"墨西哥","USA":"美国","Ecuador":"厄瓜多尔","Turkiye":"土耳其","Korea Republic":"韩国","Sweden":"瑞典","Austria":"奥地利","Iran":"伊朗","Australia":"澳大利亚","Cote d'Ivoire":"象牙海岸","Egypt":"埃及","Algeria":"阿尔及利亚","Ghana":"加纳","Tunisia":"突尼斯","Paraguay":"巴拉圭","Canada":"加拿大","Scotland":"苏格兰","Qatar":"卡塔尔","Saudi Arabia":"沙特","Uzbekistan":"乌兹别克","South Africa":"南非","DR Congo":"刚果金","Jordan":"约旦","Iraq":"伊拉克","Cabo Verde":"佛得角","Curacao":"库拉索","Panama":"巴拿马","Haiti":"海地","New Zealand":"新西兰","Bosnia":"波黑","Czechia":"捷克"};
 const FL={"Spain":"🇪🇸","France":"🇫🇷","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Brazil":"🇧🇷","Argentina":"🇦🇷","Portugal":"🇵🇹","Germany":"🇩🇪","Netherlands":"🇳🇱","Belgium":"🇧🇪","Norway":"🇳🇴","Colombia":"🇨🇴","Croatia":"🇭🇷","Uruguay":"🇺🇾","Morocco":"🇲🇦","Switzerland":"🇨🇭","Senegal":"🇸🇳","Japan":"🇯🇵","Mexico":"🇲🇽","USA":"🇺🇸","Ecuador":"🇪🇨","Turkiye":"🇹🇷","Korea Republic":"🇰🇷","Sweden":"🇸🇪","Austria":"🇦🇹","Iran":"🇮🇷","Australia":"🇦🇺","Cote d'Ivoire":"🇨🇮","Egypt":"🇪🇬","Algeria":"🇩🇿","Ghana":"🇬🇭","Tunisia":"🇹🇳","Paraguay":"🇵🇾","Canada":"🇨🇦","Scotland":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Qatar":"🇶🇦","Saudi Arabia":"🇸🇦","Uzbekistan":"🇺🇿","South Africa":"🇿🇦","DR Congo":"🇨🇩","Jordan":"🇯🇴","Iraq":"🇮🇶","Cabo Verde":"🇨🇻","Curacao":"🇨🇼","Panama":"🇵🇦","Haiti":"🇭🇹","New Zealand":"🇳🇿","Bosnia":"🇧🇦","Czechia":"🇨🇿"};
@@ -619,6 +662,7 @@ function renderFunnel(){
   fbox.appendChild(el);
  });
 }
+const STATIC={"cmpTitle":{"zh":"胜平负命中率 · 横向标杆","en":"Result Accuracy · Benchmarked"},"cmpSub":{"zh":"本模型的胜平负方向命中率,与足球预测领域有据可查的基准并列。足球是公认最难预测的主流运动:学界研究显示博彩公司在足球上的准确率仅约 54%(同口径下篮球达 74%、美式橄榄球 67%),且统计模型普遍存在「玻璃天花板」。能稳定站上这条基准带,即代表真实的判别力。","en":"This model's W/D/L direction accuracy, set against documented benchmarks from football-forecasting research. Football is the hardest mainstream sport to predict: studies put bookmaker accuracy at just ~54% (vs ~74% basketball, ~67% NFL on the same measure), and statistical models hit a well-known 'glass ceiling'. Holding above this benchmark band reflects genuine skill."},"cmpLegend":{"zh":"虚线 = 博彩公司基准(约 54%),越过即跑赢市场","en":"Dashed line = bookmaker baseline (~54%); crossing it beats the market"},"cmpMe":{"zh":"本模型","en":"This model"},"cmpMeSub":{"zh":"五维评分 + 泊松引擎,逐场盲测锁定","en":"5-dim ratings + Poisson, blind-locked picks"},"cmpLiveTag":{"zh":"更新中","en":"updating"},"cmpCeil":{"zh":"理论天花板","en":"Theoretical ceiling"},"cmpCeilSub":{"zh":"学界报告的足球预测上限(非对手)","en":"Reported ML ceiling — not a rival"},"cmpMkt":{"zh":"博彩公司基准","en":"Bookmaker baseline"},"cmpMktSub":{"zh":"Beal 等(2019):足球约 54%","en":"Beal et al. (2019): ~54% for football"},"cmpStat":{"zh":"统计/机器学习模型","en":"Statistical / ML models"},"cmpStatSub":{"zh":"多项研究:约 52–56%","en":"Multiple studies: ~52–56%"},"cmpFav":{"zh":"无脑押强队","en":"Always pick favorite"},"cmpFavSub":{"zh":"每场押排名更高一方","en":"Back the higher-ranked side every time"},"cmpRand":{"zh":"随机三选一","en":"Random (1 of 3)"},"cmpRandSub":{"zh":"胜/平/负盲猜的数学下限","en":"Blind W/D/L guess — mathematical floor"},"cmpFoot":{"zh":"<b>读法:</b>命中率衡量「方向猜对」的能力,不等于盈利能力——盈亏取决于「模型概率 vs 赔率」的差。基准引自公开学术研究(Beal、Norman & Ramchurn 2019 等),为联赛长期统计的典型值;世界杯小组赛强弱差距更大,实测值会高于联赛基准。当前样本仍小,数字会随赛事推进波动。","en":"<b>How to read this:</b> accuracy measures getting the direction right, not profitability — returns depend on model-probability vs odds. Benchmarks are drawn from published research (Beal, Norman & Ramchurn 2019 and others) and reflect long-run league figures; World Cup group games have wider talent gaps, so live values run above league baselines. The sample is still small; figures shift as the tournament unfolds."},"hUpset":{"zh":"冷门风险榜","en":"Upset Risk Board"},"uHitRate":{"zh":"已结算应验率","en":"materialized rate"},"uResolved":{"zh":"已结算","en":"resolved"},"uConfirmed":{"zh":"应验","en":"hit"},"uHeld":{"zh":"未应验","en":"held"},"uPending":{"zh":"待赛","en":"pending"},"dUpset":{"zh":"冷门具体哪场发生是随机的、无法预测,但\"哪些对阵结构上冷门风险高\"是有规律的。本榜不预测谁爆冷,而是基于客观信号(首秀新军数据少、巨星队首战磨合、死守型弱旅、实力接近)标出高风险对阵并说明原因。已发生的标注是否应验。","en":"Which specific match produces an upset is random and unpredictable — but which matchups are structurally upset-prone follows patterns. This board does not predict who wins; it flags high-risk matchups from objective signals (thin-data debutants, star-reliant favorites in openers, bus-parking underdogs, close ratings) and explains why. Played matches show whether the risk materialized."},"refreshAbout":{"zh":"<b>↻ 关于更新</b> 本页为静态页面。随着赛事进行,比分与命中率会更新——更新方式是告知作者「刷新世界杯预测」,即可抓取最新真实比分并重新生成本页。","en":"<b>↻ About updates</b> This is a static page. As the tournament unfolds, scores and accuracy are refreshed on request — ask for a refresh and the page is regenerated with the latest real results."},"slineLabel":{"zh":"最可能比分","en":"Most likely score"},"lede":{"zh":"一套独立的足球结果预测模型:以五个可观测维度为每支球队打分,经泊松进球分布推导出胜平负概率与最可能比分,全程不以博彩赔率为输入,仅在打分完成后与市场对照、识别分歧。模型已在两届欧冠淘汰赛上做赛前盲测回测(30 场命中 25 场,83%),并依据本届揭幕阶段的真实结果对东道主加成与进球基准做过一次校准。","en":"An independent model for football outcomes: each team is scored across five observable dimensions, then a Poisson goal distribution yields win/draw/loss probabilities and the most-likely scoreline. Betting odds are never an input — the market is consulted only after scoring, to surface disagreements. Backtested blind on two Champions League knockout stages (25 of 30, 83%), and calibrated once against this tournament's opening results for host-bonus and scoring baselines."},"stUCL":{"zh":"欧冠回测","en":"UCL backtest"},"stTeams":{"zh":"参赛队","en":"teams"},"stGroups":{"zh":"小组全预测","en":"groups predicted"},"stBlind":{"zh":"盲测锁定","en":"locked predictions"},"stamp":{"zh":"数据快照 2026-06-21(首轮全部结束+次轮进行中:累计39场,输赢命中24/39=62%,比分命中9/39=23%;新增西班牙4-0沙特、比利时0-0伊朗、佛得角2-2逼平乌拉圭) · 模型据真实结果与最新伤停校准","en":"Snapshot: Jun 21 (R1 complete + R2 underway: 39 played, result 24/39=62%, exact 9/39=23%; new: Spain 4-0 Saudi Arabia, Belgium 0-0 Iran, Cabo Verde 2-2 Uruguay) · calibrated on results & latest team news"},"h1":{"zh":"赛事进程","en":"Tournament Progress"},"d1":{"zh":"世界杯从48队逐层淘汰到1个冠军。下面是各阶段的实时进度——<span style=\"color:#ff9b9b\">● 进行中</span>的阶段已有真实数据,<span style=\"color:var(--muted2)\">● 待产生/未开始</span>的阶段在上一阶段结束后揭晓。点击任意阶段跳转到对应详情。","en":"The World Cup narrows from 48 teams to one champion. Below is live progress per stage — <span style=\"color:#ff9b9b\">● in-progress</span> stages have real data, <span style=\"color:var(--muted2)\">● TBD/not-started</span> stages reveal once the prior stage ends. Tap any stage to jump to its section."},"h2":{"zh":"小组赛 · 出线与比分预测","en":"Group Stage · Standings & Score Predictions"},"d2":{"zh":"每组左侧为预测出线排位(<span style=\"color:var(--gold)\">金=头名</span>、白=次名),右侧为该组全部6场对阵的预测比分,点击任意场次看详情。C组摩洛哥预测压制巴西位列头名。","en":"Left: predicted standings (<span style=\"color:var(--gold)\">gold = 1st</span>, white = 2nd). Right: predicted scores for all 6 group matches — tap any match for details. In Group C, Morocco is predicted to edge Brazil for top spot."},"h3":{"zh":"逐场预测 · 实时对照","en":"Match-by-Match · Live vs Predicted"},"d3":{"zh":"每场卡片标注:<span style=\"color:var(--gold)\">● 已结束</span>对比预测与真实并计入命中率,<span style=\"color:var(--muted2)\">● 待赛</span>为已锁定的预测(每天比赛结束后统一更新)。命中分两档:<b style=\"color:#fff\">输赢命中</b>(胜平负方向对)与<b style=\"color:#fff\">比分命中</b>(具体比分也对)。金标为模型与市场分歧较大的对阵。","en":"Each card is tagged: <span style=\"color:var(--gold)\">● final</span> compares predicted vs actual and counts toward accuracy; <span style=\"color:var(--muted2)\">● upcoming</span> is a locked prediction (updated once per day after matches finish). Two accuracy tiers: <b style=\"color:#fff\">result</b> (W/D/L direction) and <b style=\"color:#fff\">exact score</b>. Gold tags mark matches where the model diverges most from the market."},"koBracketLabel":{"zh":"▼ 以下为模型推演的最可能晋级路径(8强→决赛)","en":"▼ Below: model's most-likely path (QF → Final)"},"h4":{"zh":"淘汰赛对阵树 · 预测","en":"Knockout Bracket · Predicted"},"d4":{"zh":"完整淘汰赛阶梯:32强→16强→8强→半决赛→决赛。具体对阵<b>待小组赛结束</b>才能确定,下方框架先占位标“待定”,小组赛打完后填入真实对阵。再往下是模型当前推演的最可能晋级路径。","en":"The full knockout ladder: R32 → R16 → QF → SF → Final. Specific matchups are <b>set only after the group stage</b>; the framework below holds TBD placeholders to be filled once groups finish. Further down is the model's current most-likely path."},"h5":{"zh":"夺冠概率","en":"Title Odds"},"d5":{"zh":"独立模型经4万次蒙特卡洛模拟得出。法国与阿根廷并列领跑,西班牙居第三,摩洛哥进入前六,巴西因伤病减员跌出第一档。","en":"From 40,000 Monte Carlo simulations of the independent model. France and Argentina lead jointly, Spain third, Morocco inside the top six, and an injury-hit Brazil drops out of the top tier."},"h6":{"zh":"模型与市场的分歧","en":"Model vs Market"},"d6":{"zh":"独立评分完成后与博彩市场对照,以下四处存在明显分歧。每处均有具体依据,分歧通常对应潜在冷门或高估对象。","en":"After scoring independently, comparing against the betting market reveals four clear disagreements. Each has a concrete basis; divergences often flag potential upsets or overrated sides."},"h7":{"zh":"模型可信度 · 欧冠回测","en":"Model Credibility · UCL Backtest"},"d7":{"zh":"这套预测靠不靠谱?用同一套引擎对两届已结束的欧洲冠军联赛淘汰赛回测,仅用赛前信息打分。30场命中25场(83%),反映模型在真实赛事上的判别能力。","en":"Is this any good? The same engine was backtested on two completed Champions League knockout stages, scoring from pre-match info only. 25 of 30 correct (83%) — a read on the model's real-world discrimination."},"h8":{"zh":"自己推演","en":"Run Your Own"},"d8":{"zh":"选两队,同一套泊松引擎算胜平负与最可能比分,规则对每场一致。","en":"Pick two teams; the same Poisson engine computes W/D/L and the most likely score — identical rules for every match."},"h9":{"zh":"方法","en":"Method"},"sbDone":{"zh":"已结束","en":"Final"},"sbWdl":{"zh":"输赢","en":"Result"},"sbExact":{"zh":"比分","en":"Exact"},"sbRate":{"zh":"输赢命中率","en":"Result %"},"refreshBtn":{"zh":"↻ 刷新比分","en":"↻ Refresh scores"},"refreshNote":{"zh":"输赢命中=胜平负方向对;比分命中=连具体比分都对。比分会随赛事更新——目前没有可靠的免费实时数据源能直连静态网页,所以更新方式是:告知作者「刷新世界杯预测」,即可抓取最新真实比分并重新生成本页。","en":"Result hit = W/D/L direction matches; exact hit = exact score matches. Scores update as the tournament progresses — there is no reliable free real-time feed that a static page can call directly, so updates work by request: ask for a refresh and the page is regenerated with the latest real results."},"ringSub":{"zh":"25 / 30 场命中","en":"25 / 30 correct"},"bt1":{"zh":"2024-25 赛季<small>冠军 PSG · 模型预测正确</small>","en":"2024-25<small>Champion PSG · model correct</small>"},"bt2":{"zh":"2025-26 赛季<small>冠军 PSG · 模型预测正确</small>","en":"2025-26<small>Champion PSG · model correct</small>"},"btNote":{"zh":"两届冠军均被模型提前命中。<b>5场预测偏差全部为公认冷门</b>——国际米兰连克拜仁与巴萨、阿森纳淘汰皇马、马竞爆冷巴萨。模型在实力分明的对阵中判别力强,在势均力敌的对阵中倾向实力略高一方,这是概率模型的固有边界。","en":"Both champions were called in advance. <b>All 5 misses were recognized upsets</b> — Inter beating Bayern then Barcelona, Arsenal ousting Real Madrid, Atlético shocking Barça. The model is strong when strength gaps are clear, and leans to the slightly stronger side in coin-flip ties — an inherent limit of probability models."},"btSum":{"zh":"展开5场预测偏差的比赛","en":"Show the 5 missed ties"},"btm1":{"zh":"<b>利物浦 vs PSG</b>　模型倾向利物浦(信心仅53%),PSG点球晋级","en":"<b>Liverpool vs PSG</b>　model leaned Liverpool (just 53%), PSG won on penalties"},"btm2":{"zh":"<b>拜仁 vs 国际米兰</b>　60%倾向拜仁,国米爆冷","en":"<b>Bayern vs Inter</b>　60% on Bayern, Inter upset them"},"btm3":{"zh":"<b>皇马 vs 阿森纳</b>　模型倾向皇马,阿森纳双回合取胜","en":"<b>Real Madrid vs Arsenal</b>　model leaned Real, Arsenal won both legs"},"btm4":{"zh":"<b>巴萨 vs 国际米兰</b>　模型倾向巴萨,国米两回合7-6逆转","en":"<b>Barça vs Inter</b>　model leaned Barça, Inter edged 7-6 on aggregate"},"btm5":{"zh":"<b>巴萨 vs 马竞</b>　模型倾向巴萨,马竞爆冷","en":"<b>Barça vs Atlético</b>　model leaned Barça, Atlético upset them"},"m1h":{"zh":"五维独立评分","en":"Five-dimension scoring"},"m2h":{"zh":"独立于赔率","en":"Independent of odds"},"m3h":{"zh":"泊松进球模型","en":"Poisson goal model"},"m4h":{"zh":"回测与待验证","en":"Backtested & pending"},"m1p":{"zh":"阵容34%·状态20%·战术16%·底蕴14%·伤病16%,权重固定、对所有球队一致。伤病是关键变量,巴西因此显著下调。","en":"Squad 34% · form 20% · tactics 16% · pedigree 14% · fitness 16%, fixed weights applied identically to every team. Fitness is the key swing factor — it dropped Brazil sharply."},"m2p":{"zh":"评分仅基于可观测信号,完成后再与市场对照。市场作为参照系而非依据,分歧处提供额外信息。","en":"Scores come only from observable signals, then get compared against the market afterward. The market is a reference, not an input; divergences add information."},"m3p":{"zh":"评分差转换为各队期望进球,再得出每个比分的概率。同一函数应用于全部比赛,规则一致。","en":"Rating gaps convert to each side's expected goals, then to the probability of every scoreline. The same function applies to all matches — consistent rules."},"m4p":{"zh":"历史回测(欧冠83%)验证判别力;本届逐场预测已锁定并对照真实结果(目前39场胜负命中62%)。偏差如实标注。","en":"History backtest (UCL 83%) validates discrimination; this tournament's per-match picks are locked and checked against results (62% on outcomes over 39 games so far). Misses flagged honestly."},"kicker":{"zh":"独立模型 · 已回测 · 绿茵版","en":"Independent Model · Backtested · Pitch Edition"},"footer":{"zh":"冠军概率最高约20%,意味着多数情形下夺冠者为其他球队,这是淘汰赛的固有不确定性。回测83%反映模型在实力分明对阵中的判别力,对纯粹冷门的预测能力有限。模型仅供娱乐参考。<br><br>数据截至 2026-06-21 · 仅供娱乐 ⚽","en":"The top title probability is only ~20%, meaning the champion is usually someone else — the inherent uncertainty of knockout football. The 83% backtest reflects discrimination in clear-gap ties; pure upsets are beyond any model. For entertainment only.<br><br>Data through Jun 21, 2026 · For fun only ⚽"}};
 renderFunnel();
 
 /* ---------- count-up stats ---------- */
@@ -1027,7 +1071,6 @@ function renderMatchSection(){renderRoundTabs();renderAllMatches();}
 renderMatchSection();
 
 /* ====== language engine ====== */
-const STATIC={"hUpset":{"zh":"冷门风险榜","en":"Upset Risk Board"},"uHitRate":{"zh":"已结算应验率","en":"materialized rate"},"uResolved":{"zh":"已结算","en":"resolved"},"uConfirmed":{"zh":"应验","en":"hit"},"uHeld":{"zh":"未应验","en":"held"},"uPending":{"zh":"待赛","en":"pending"},"dUpset":{"zh":"冷门具体哪场发生是随机的、无法预测,但\"哪些对阵结构上冷门风险高\"是有规律的。本榜不预测谁爆冷,而是基于客观信号(首秀新军数据少、巨星队首战磨合、死守型弱旅、实力接近)标出高风险对阵并说明原因。已发生的标注是否应验。","en":"Which specific match produces an upset is random and unpredictable — but which matchups are structurally upset-prone follows patterns. This board does not predict who wins; it flags high-risk matchups from objective signals (thin-data debutants, star-reliant favorites in openers, bus-parking underdogs, close ratings) and explains why. Played matches show whether the risk materialized."},"refreshAbout":{"zh":"<b>↻ 关于更新</b> 本页为静态页面。随着赛事进行,比分与命中率会更新——更新方式是告知作者「刷新世界杯预测」,即可抓取最新真实比分并重新生成本页。","en":"<b>↻ About updates</b> This is a static page. As the tournament unfolds, scores and accuracy are refreshed on request — ask for a refresh and the page is regenerated with the latest real results."},"slineLabel":{"zh":"最可能比分","en":"Most likely score"},"lede":{"zh":"基于五维实力评分的独立预测模型,不直接采用博彩赔率,而是以可观测信号独立打分后再与市场对照。模型已在两届欧洲冠军联赛淘汰赛上回测验证(30场命中25场);并依据本届前4场真实结果对东道主分级加成与进球模型做了二次校准(校准前原始模型胜负命中3/4,校准后4场预测均与结果方向一致)。","en":"An independent prediction model built on five strength dimensions. Instead of taking bookmaker odds directly, it scores teams from observable signals and then compares against the market. Backtested on two seasons of Champions League knockouts (25 of 30 correct), and recalibrated on this tournament's first 4 real results (the original model went 3/4 on outcomes; after calibration all 4 matched the actual result direction)."},"stUCL":{"zh":"欧冠回测","en":"UCL backtest"},"stTeams":{"zh":"参赛队","en":"teams"},"stGroups":{"zh":"小组全预测","en":"groups predicted"},"stBlind":{"zh":"盲测锁定","en":"locked predictions"},"stamp":{"zh":"数据快照 2026-06-21(首轮全部结束+次轮进行中:累计39场,输赢命中24/39=62%,比分命中9/39=23%;新增西班牙4-0沙特、比利时0-0伊朗、佛得角2-2逼平乌拉圭) · 模型据真实结果与最新伤停校准","en":"Snapshot: Jun 21 (R1 complete + R2 underway: 39 played, result 24/39=62%, exact 9/39=23%; new: Spain 4-0 Saudi Arabia, Belgium 0-0 Iran, Cabo Verde 2-2 Uruguay) · calibrated on results & latest team news"},"h1":{"zh":"赛事进程","en":"Tournament Progress"},"d1":{"zh":"世界杯从48队逐层淘汰到1个冠军。下面是各阶段的实时进度——<span style=\"color:#ff9b9b\">● 进行中</span>的阶段已有真实数据,<span style=\"color:var(--muted2)\">● 待产生/未开始</span>的阶段在上一阶段结束后揭晓。点击任意阶段跳转到对应详情。","en":"The World Cup narrows from 48 teams to one champion. Below is live progress per stage — <span style=\"color:#ff9b9b\">● in-progress</span> stages have real data, <span style=\"color:var(--muted2)\">● TBD/not-started</span> stages reveal once the prior stage ends. Tap any stage to jump to its section."},"h2":{"zh":"小组赛 · 出线与比分预测","en":"Group Stage · Standings & Score Predictions"},"d2":{"zh":"每组左侧为预测出线排位(<span style=\"color:var(--gold)\">金=头名</span>、白=次名),右侧为该组全部6场对阵的预测比分,点击任意场次看详情。C组摩洛哥预测压制巴西位列头名。","en":"Left: predicted standings (<span style=\"color:var(--gold)\">gold = 1st</span>, white = 2nd). Right: predicted scores for all 6 group matches — tap any match for details. In Group C, Morocco is predicted to edge Brazil for top spot."},"h3":{"zh":"逐场预测 · 实时对照","en":"Match-by-Match · Live vs Predicted"},"d3":{"zh":"每场卡片标注:<span style=\"color:var(--gold)\">● 已结束</span>对比预测与真实并计入命中率,<span style=\"color:var(--muted2)\">● 待赛</span>为已锁定的预测(每天比赛结束后统一更新)。命中分两档:<b style=\"color:#fff\">输赢命中</b>(胜平负方向对)与<b style=\"color:#fff\">比分命中</b>(具体比分也对)。金标为模型与市场分歧较大的对阵。","en":"Each card is tagged: <span style=\"color:var(--gold)\">● final</span> compares predicted vs actual and counts toward accuracy; <span style=\"color:var(--muted2)\">● upcoming</span> is a locked prediction (updated once per day after matches finish). Two accuracy tiers: <b style=\"color:#fff\">result</b> (W/D/L direction) and <b style=\"color:#fff\">exact score</b>. Gold tags mark matches where the model diverges most from the market."},"koBracketLabel":{"zh":"▼ 以下为模型推演的最可能晋级路径(8强→决赛)","en":"▼ Below: model's most-likely path (QF → Final)"},"h4":{"zh":"淘汰赛对阵树 · 预测","en":"Knockout Bracket · Predicted"},"d4":{"zh":"完整淘汰赛阶梯:32强→16强→8强→半决赛→决赛。具体对阵<b>待小组赛结束</b>才能确定,下方框架先占位标“待定”,小组赛打完后填入真实对阵。再往下是模型当前推演的最可能晋级路径。","en":"The full knockout ladder: R32 → R16 → QF → SF → Final. Specific matchups are <b>set only after the group stage</b>; the framework below holds TBD placeholders to be filled once groups finish. Further down is the model's current most-likely path."},"h5":{"zh":"夺冠概率","en":"Title Odds"},"d5":{"zh":"独立模型经4万次蒙特卡洛模拟得出。法国与阿根廷并列领跑,西班牙居第三,摩洛哥进入前六,巴西因伤病减员跌出第一档。","en":"From 40,000 Monte Carlo simulations of the independent model. France and Argentina lead jointly, Spain third, Morocco inside the top six, and an injury-hit Brazil drops out of the top tier."},"h6":{"zh":"模型与市场的分歧","en":"Model vs Market"},"d6":{"zh":"独立评分完成后与博彩市场对照,以下四处存在明显分歧。每处均有具体依据,分歧通常对应潜在冷门或高估对象。","en":"After scoring independently, comparing against the betting market reveals four clear disagreements. Each has a concrete basis; divergences often flag potential upsets or overrated sides."},"h7":{"zh":"模型可信度 · 欧冠回测","en":"Model Credibility · UCL Backtest"},"d7":{"zh":"这套预测靠不靠谱?用同一套引擎对两届已结束的欧洲冠军联赛淘汰赛回测,仅用赛前信息打分。30场命中25场(83%),反映模型在真实赛事上的判别能力。","en":"Is this any good? The same engine was backtested on two completed Champions League knockout stages, scoring from pre-match info only. 25 of 30 correct (83%) — a read on the model's real-world discrimination."},"h8":{"zh":"自己推演","en":"Run Your Own"},"d8":{"zh":"选两队,同一套泊松引擎算胜平负与最可能比分,规则对每场一致。","en":"Pick two teams; the same Poisson engine computes W/D/L and the most likely score — identical rules for every match."},"h9":{"zh":"方法","en":"Method"},"sbDone":{"zh":"已结束","en":"Final"},"sbWdl":{"zh":"输赢","en":"Result"},"sbExact":{"zh":"比分","en":"Exact"},"sbRate":{"zh":"输赢命中率","en":"Result %"},"refreshBtn":{"zh":"↻ 刷新比分","en":"↻ Refresh scores"},"refreshNote":{"zh":"输赢命中=胜平负方向对;比分命中=连具体比分都对。比分会随赛事更新——目前没有可靠的免费实时数据源能直连静态网页,所以更新方式是:告知作者「刷新世界杯预测」,即可抓取最新真实比分并重新生成本页。","en":"Result hit = W/D/L direction matches; exact hit = exact score matches. Scores update as the tournament progresses — there is no reliable free real-time feed that a static page can call directly, so updates work by request: ask for a refresh and the page is regenerated with the latest real results."},"ringSub":{"zh":"25 / 30 场命中","en":"25 / 30 correct"},"bt1":{"zh":"2024-25 赛季<small>冠军 PSG · 模型预测正确</small>","en":"2024-25<small>Champion PSG · model correct</small>"},"bt2":{"zh":"2025-26 赛季<small>冠军 PSG · 模型预测正确</small>","en":"2025-26<small>Champion PSG · model correct</small>"},"btNote":{"zh":"两届冠军均被模型提前命中。<b>5场预测偏差全部为公认冷门</b>——国际米兰连克拜仁与巴萨、阿森纳淘汰皇马、马竞爆冷巴萨。模型在实力分明的对阵中判别力强,在势均力敌的对阵中倾向实力略高一方,这是概率模型的固有边界。","en":"Both champions were called in advance. <b>All 5 misses were recognized upsets</b> — Inter beating Bayern then Barcelona, Arsenal ousting Real Madrid, Atlético shocking Barça. The model is strong when strength gaps are clear, and leans to the slightly stronger side in coin-flip ties — an inherent limit of probability models."},"btSum":{"zh":"展开5场预测偏差的比赛","en":"Show the 5 missed ties"},"btm1":{"zh":"<b>利物浦 vs PSG</b>　模型倾向利物浦(信心仅53%),PSG点球晋级","en":"<b>Liverpool vs PSG</b>　model leaned Liverpool (just 53%), PSG won on penalties"},"btm2":{"zh":"<b>拜仁 vs 国际米兰</b>　60%倾向拜仁,国米爆冷","en":"<b>Bayern vs Inter</b>　60% on Bayern, Inter upset them"},"btm3":{"zh":"<b>皇马 vs 阿森纳</b>　模型倾向皇马,阿森纳双回合取胜","en":"<b>Real Madrid vs Arsenal</b>　model leaned Real, Arsenal won both legs"},"btm4":{"zh":"<b>巴萨 vs 国际米兰</b>　模型倾向巴萨,国米两回合7-6逆转","en":"<b>Barça vs Inter</b>　model leaned Barça, Inter edged 7-6 on aggregate"},"btm5":{"zh":"<b>巴萨 vs 马竞</b>　模型倾向巴萨,马竞爆冷","en":"<b>Barça vs Atlético</b>　model leaned Barça, Atlético upset them"},"m1h":{"zh":"五维独立评分","en":"Five-dimension scoring"},"m2h":{"zh":"独立于赔率","en":"Independent of odds"},"m3h":{"zh":"泊松进球模型","en":"Poisson goal model"},"m4h":{"zh":"回测与待验证","en":"Backtested & pending"},"m1p":{"zh":"阵容34%·状态20%·战术16%·底蕴14%·伤病16%,权重固定、对所有球队一致。伤病是关键变量,巴西因此显著下调。","en":"Squad 34% · form 20% · tactics 16% · pedigree 14% · fitness 16%, fixed weights applied identically to every team. Fitness is the key swing factor — it dropped Brazil sharply."},"m2p":{"zh":"评分仅基于可观测信号,完成后再与市场对照。市场作为参照系而非依据,分歧处提供额外信息。","en":"Scores come only from observable signals, then get compared against the market afterward. The market is a reference, not an input; divergences add information."},"m3p":{"zh":"评分差转换为各队期望进球,再得出每个比分的概率。同一函数应用于全部比赛,规则一致。","en":"Rating gaps convert to each side's expected goals, then to the probability of every scoreline. The same function applies to all matches — consistent rules."},"m4p":{"zh":"历史回测(欧冠83%)验证判别力;本届逐场预测已锁定并对照真实结果(目前39场胜负命中62%)。偏差如实标注。","en":"History backtest (UCL 83%) validates discrimination; this tournament's per-match picks are locked and checked against results (62% on outcomes over 39 games so far). Misses flagged honestly."},"kicker":{"zh":"独立模型 · 已回测 · 绿茵版","en":"Independent Model · Backtested · Pitch Edition"},"footer":{"zh":"冠军概率最高约20%,意味着多数情形下夺冠者为其他球队,这是淘汰赛的固有不确定性。回测83%反映模型在实力分明对阵中的判别力,对纯粹冷门的预测能力有限。模型仅供娱乐参考。<br><br>数据截至 2026-06-21 · 仅供娱乐 ⚽","en":"The top title probability is only ~20%, meaning the champion is usually someone else — the inherent uncertainty of knockout football. The 83% backtest reflects discrimination in clear-gap ties; pure upsets are beyond any model. For entertainment only.<br><br>Data through Jun 21, 2026 · For fun only ⚽"}};
 function applyStatic(){
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.getAttribute('data-i18n');
@@ -1040,30 +1083,67 @@ function setLang(l){
   document.getElementById('langToggle').textContent = (l==='zh'?'EN':'中');
   applyStatic();
   // re-render all dynamic pieces
-  renderFunnel(); renderDV(); renderUpset(); renderGroups(); renderBracket(); renderKOStages(); renderMatchSection();
-  // duel selects: rebuild option labels
-  [sa,sb].forEach(sel=>{const v=sel.value;[...sel.options].forEach(o=>{o.text=TN(o.value);});sel.value=v;});
-  if(typeof render==='function') render();
+  renderFunnel(); renderDV(); renderUpset(); renderGroups(); renderBracket(); renderKOStages(); renderMatchSection(); renderAccuracy();
 }
 document.getElementById('langToggle').addEventListener('click',()=>setLang(LANG==='zh'?'en':'zh'));
 // (init moved to end, after duel selects are defined)
 
-/* ---------- duel ---------- */
-const fact=n=>{let r=1;for(let i=2;i<=n;i++)r*=i;return r;};
-const pois=(m,k)=>Math.exp(-m)*Math.pow(m,k)/fact(k);
-const eg=(a,b)=>[1.45*Math.exp((a-b)/26),1.45*Math.exp((b-a)/26)];
-function calc(a,b){const[ma,mb]=eg(R[a],R[b]);let pa=0,pd=0,pb=0,bb=0,bs=[0,0];
- for(let g=0;g<8;g++)for(let h=0;h<8;h++){const p=pois(ma,g)*pois(mb,h);if(g>h)pa+=p;else if(g===h)pd+=p;else pb+=p;if(p>bb){bb=p;bs=[g,h];}}return{pa,pd,pb,bs};}
-const sa=document.getElementById('selA'),sb=document.getElementById('selB');
-Object.keys(R).sort((x,y)=>R[y]-R[x]).forEach(t=>{sa.add(new Option(TN(t),t));sb.add(new Option(TN(t),t));});
-sa.value="Brazil";sb.value="Morocco";
-const pa=document.getElementById('pa'),pd=document.getElementById('pd'),pb=document.getElementById('pb'),sl=document.getElementById('sl');
-function render(){const a=sa.value,b=sb.value;if(a===b)return;const r=calc(a,b);
- pa.style.width=(r.pa*100)+'%';pd.style.width=(r.pd*100)+'%';pb.style.width=(r.pb*100)+'%';
- pa.textContent=Math.round(r.pa*100)+'%';pd.textContent=Math.round(r.pd*100)+'%';pb.textContent=Math.round(r.pb*100)+'%';
- sl.innerHTML=`${flag(a,20)}<b>${r.bs[0]}–${r.bs[1]}</b>${flag(b,20)}`;}
-sa.onchange=render;sb.onchange=render;render();
-/* ---- init language (after all renderers + selects defined) ---- */
+/* ---------- accuracy comparison card ---------- */
+function renderAccuracy(){
+  const box=document.getElementById('accCard');
+  if(!box) return;
+  const P=ALLMATCHES.filter(m=>m.real);
+  const N=P.length;
+  const hit=P.filter(m=>m.real.winner===m.pick).length;
+  const pctNum = N? (hit/N*100) : 0;
+  const pct2 = pctNum.toFixed(2);            // two decimals for the hero figure
+  const pctInt = Math.round(pctNum);
+  // ceiling = theoretical reference, shown separately (not ranked, not a rival)
+  const ceiling={lbl:t('cmpCeil'), sub:t('cmpCeilSub'), val:65, txt:'~65%'};
+  // ranked benchmarks (real reference points); model competes here
+  const rows=[
+    {me:true, lbl:t('cmpMe'),   sub:t('cmpMeSub'),   val:pctNum, txt:pct2+'%'},
+    {me:false,lbl:t('cmpStat'), sub:t('cmpStatSub'), val:54, txt:'52–56%'},
+    {me:false,lbl:t('cmpMkt'),  sub:t('cmpMktSub'),  val:54, txt:'~54%'},
+    {me:false,lbl:t('cmpFav'),  sub:t('cmpFavSub'),  val:50, txt:'~50%'},
+    {me:false,lbl:t('cmpRand'), sub:t('cmpRandSub'), val:33, txt:'33%'}
+  ];
+  rows.sort((a,b)=>b.val-a.val);
+  // bar scale: absolute 0–100 so a full bar = 100% (honest, intuitive).
+  const w=v=>Math.max(2, Math.min(100, Math.round(v)));
+  const correctWord = LANG==='zh'?'场命中':'correct';
+  const ceilHtml=`
+    <div class="acc-r ceil">
+      <div class="rank">↑</div>
+      <div class="who"><b>${ceiling.lbl}</b><span>${ceiling.sub}</span></div>
+      <div class="bar"><span class="mark" style="left:54%"></span><i style="width:${w(ceiling.val)}%"></i></div>
+      <div class="num">${ceiling.txt}</div>
+    </div>`;
+  const rowsHtml=rows.map((r,i)=>`
+    <div class="acc-r ${r.me?'me':''}">
+      <div class="rank">${i+1}</div>
+      <div class="who"><b>${r.lbl}</b><span>${r.sub}</span></div>
+      <div class="bar"><span class="mark" style="left:54%"></span><i style="width:${w(r.val)}%"></i></div>
+      <div class="num">${r.txt}</div>
+    </div>`).join('');
+  box.innerHTML=`
+    <div class="acc-top">
+      <div class="acc-hero">
+        <div class="eyebrow"><span class="live-dot"></span>${t('cmpLiveTag')}</div>
+        <div class="pct">${pct2}<small>%</small></div>
+        <div class="frac">${hit} / ${N} ${correctWord}</div>
+      </div>
+      <div class="acc-intro">
+        <h3>${t('cmpTitle')}</h3>
+        <p>${t('cmpSub')}</p>
+      </div>
+    </div>
+    <div class="acc-legend">${t('cmpLegend')}</div>
+    <div class="acc-table">${ceilHtml}${rowsHtml}</div>
+    <div class="acc-foot">${t('cmpFoot')}</div>`;
+}
+
+/* ---- init language ---- */
 setLang(LANG);
 </script>
 </body>
