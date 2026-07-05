@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="torch_env" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="torch_env" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="SSH (sftp://zengzihan@112.30.139.58:53322/home/zengzihan/.virtualenvs/BaseEnvironment]/bin/python)" project-jdk-type="Python SDK" />
 </project>
